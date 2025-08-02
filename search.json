@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "WebJ",
     "section": "",
-    "text": "This is a website on using Julia with Quarto. It site is hosted on github under gh Pages. ykwongsuss.github.io. The site has basic examples on dataframes, plots and programming using Julia.\n\ntypes\ndataframes\ntables\nplots\nprogramming\n\n\nWebsites\n\nWebQ: Quarto Notes\nykwongWebR: R Basics\nWebJ: Julia Basics\nykwongWebStats: Mathematical Statistics with R\nykwongWebSurv: Survival Analysis with R\nykwongWebNPar: NonParametric Statistics with R\nykwongWebLA: Linear Algebra with Julia\n\n\n\nNotes\n\nyaml: html, pdf\nqmd: footnote, references\nqblocks: code blocks, tex blocks and div blocks\nqtex: selected tex codes\nqD2: D2 diagramming",
+    "text": "This is a website on using Julia with Quarto. It site is hosted on github under gh Pages. ykwongsuss.github.io. The site has basic examples on dataframes, plots and programming using Julia.\n\ntypes\ndataframes\ntables\nplots\nprogramming\n\n\nWebsites\n\nWebQ: Quarto Notes\nykwongWebR: R Basics\nWebJ: Julia Basics\nykwongWebStats: Mathematical Statistics with R\nykwongWebSurv: Survival Analysis with R\nykwongWebNPar: NonParametric Statistics with R\nykwongWebLA: Linear Algebra with Julia\n\n\n\nNotes\n\nyaml: html, pdf\njulia: julia in Quarto\ntikz extension: tikz\nversion: how to version",
     "crumbs": [
       "Preface"
     ]
