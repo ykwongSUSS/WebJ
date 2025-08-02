@@ -1,0 +1,771 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "WebJ",
+    "section": "",
+    "text": "This is a website on using Julia with Quarto. It site is hosted on github for now - so ykwongsuss.github.io. The site is similar to WebR with basic examples on dataframes, plots and some programming.\n\ntypes\ndataframes\ntables\nplots\nprogramming\n\n\nWebsites\n\nykwongWebR: R Basics\nykwongWebStats: Mathematical Statistics with R\nykwongWebSurv: Survival Analysis with R\nykwongWebNPar: NonParametric Statistics with R\nykwongWebLA: Linear Algebra with Julia\nykwongWebJ: Julia Basics\n\n\n\nNotes\n\nyaml: html, pdf\nqmd: footnote, references\nqblocks: code blocks, tex blocks and div blocks\nqtex: selected tex codes\nqD2: D2 diagramming",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "dataframe/textEntry.html",
+    "href": "dataframe/textEntry.html",
+    "title": "textEntry in Julia",
+    "section": "",
+    "text": "For general data reading in Julia, DataFrames.jl is widely used. Additionally, CSV.jl is often used in conjunction with DataFrames.jl for reading CSV files.",
+    "crumbs": [
+      "DataFrames",
+      "textEntry"
+    ]
+  },
+  {
+    "objectID": "datatype/basictype.html",
+    "href": "datatype/basictype.html",
+    "title": "types",
+    "section": "",
+    "text": "import Pkg; Pkg.add(\"PrettyTables\");"
+  },
+  {
+    "objectID": "datatype/basictype.html#simple-data-types-in-julia",
+    "href": "datatype/basictype.html#simple-data-types-in-julia",
+    "title": "types",
+    "section": "1 Simple Data Types in Julia",
+    "text": "1 Simple Data Types in Julia\nThe usual basic types of integer, floats, boolean, character and strings are available.\n\ntypeof(3) |&gt; println\ntypeof(3.14) |&gt; println\ntypeof(pi) |&gt; println\nBool(3.14==pi) |&gt; println\n\nInt64\nFloat64\nIrrational{:π}\nfalse\n\n\n\n1.1 Tuples, Vectors and Arrays\n\n# tuple\na = (1,2,'3') |&gt; typeof |&gt; println\n# vector\nb = [1,2,3] |&gt; typeof |&gt; println\n# matrix\nC = [1 2 3; 4 5 6] |&gt; typeof |&gt; println\n\nTuple{Int64, Int64, Char}\nVector{Int64}\nMatrix{Int64}\n\n\n\n\n1.2 Named Tuple\n\n\n1.3 Strings\n\ns = \"Welcome Home\"\nlowercase(s) |&gt; println\ns[1] |&gt; println\n\nwelcome home\nW\n\n\n\n\n1.4 Categorical and Numerical Data\n\n1.4.1 Tables\n\n# Data\nstudents = [\"Alice\", \"Bob\", \"Callie\",\"Danny\"]\nmarks = [84, 53, 66,  80]\ngrades = ['A', 'C', 'B', 'A'] \n\n4-element Vector{Char}:\n 'A': ASCII/Unicode U+0041 (category Lu: Letter, uppercase)\n 'C': ASCII/Unicode U+0043 (category Lu: Letter, uppercase)\n 'B': ASCII/Unicode U+0042 (category Lu: Letter, uppercase)\n 'A': ASCII/Unicode U+0041 (category Lu: Letter, uppercase)\n\n\n\n\n1.4.2 TypedTable.jl\n\nimport Pkg; Pkg.add(\"TypedTables\")\nusing TypedTables\n  tTable = Table(\n    names = students,\n    marks = marks,\n    grades = grades\n  )\n  tTable |&gt; display\n  tTable[1]\n\nTable with 3 columns and 4 rows:\n     names   marks  grades\n   ┌──────────────────────\n 1 │ Alice   84     A\n 2 │ Bob     53     C\n 3 │ Callie  66     B\n 4 │ Danny   80     A\n\n\n(names = \"Alice\", marks = 84, grades = 'A')\n\n\n\n\n1.4.3 PrettyTables.jl\n\nusing PrettyTables\n\n\n\n1.4.4 DataFrames.jl\n\nusing DataFrames\ndf = DataFrame(\n   Names = students,\n   Marks = marks,\n   Grades = grades\n)\ndf\n\n4×3 DataFrame\n\n\n\nRow\nNames\nMarks\nGrades\n\n\n\nString\nInt64\nChar\n\n\n\n\n1\nAlice\n84\nA\n\n\n2\nBob\n53\nC\n\n\n3\nCallie\n66\nB\n\n\n4\nDanny\n80\nA"
+  },
+  {
+    "objectID": "types/basics.html",
+    "href": "types/basics.html",
+    "title": "types",
+    "section": "",
+    "text": "The usual basic types of integer, floats, boolean, character and strings are available.\n\ntypeof(3) |&gt; println\ntypeof(3.14) |&gt; println\ntypeof(pi) |&gt; println\ntypeof(3.14==pi) |&gt; println\ntypeof(\"a string\") |&gt; println\n\nInt64\nFloat64\nIrrational{:π}\nBool\nString\n\n\n\n\n\n# tuple\na = (1,2,'3') |&gt; typeof |&gt; println\n# vector\nb = [1,2,3] |&gt; typeof |&gt; println\n# matrix\nC = [1 2 3; 4 5 6] |&gt; typeof |&gt; println\n\nTuple{Int64, Int64, Char}\nVector{Int64}\nMatrix{Int64}\n\n\n\n\n\n\n# as the name implies\nnt = (a=1, b=2.0)\nnt |&gt; println\nnt.a\n\n(a = 1, b = 2.0)\n\n\n1\n\n\n\n# usage\nfor val in nt\n  println(val)\nend\n\n1\n2.0\n\n\n\n\n\n\ns = \"Welcome Home\"\nlowercase(s) |&gt; println\ns[1] |&gt; println\n\nwelcome home\nW",
+    "crumbs": [
+      "Types",
+      "basics"
+    ]
+  },
+  {
+    "objectID": "types/basics.html#simple-data-types-in-julia",
+    "href": "types/basics.html#simple-data-types-in-julia",
+    "title": "types",
+    "section": "",
+    "text": "The usual basic types of integer, floats, boolean, character and strings are available.\n\ntypeof(3) |&gt; println\ntypeof(3.14) |&gt; println\ntypeof(pi) |&gt; println\ntypeof(3.14==pi) |&gt; println\ntypeof(\"a string\") |&gt; println\n\nInt64\nFloat64\nIrrational{:π}\nBool\nString\n\n\n\n\n\n# tuple\na = (1,2,'3') |&gt; typeof |&gt; println\n# vector\nb = [1,2,3] |&gt; typeof |&gt; println\n# matrix\nC = [1 2 3; 4 5 6] |&gt; typeof |&gt; println\n\nTuple{Int64, Int64, Char}\nVector{Int64}\nMatrix{Int64}\n\n\n\n\n\n\n# as the name implies\nnt = (a=1, b=2.0)\nnt |&gt; println\nnt.a\n\n(a = 1, b = 2.0)\n\n\n1\n\n\n\n# usage\nfor val in nt\n  println(val)\nend\n\n1\n2.0\n\n\n\n\n\n\ns = \"Welcome Home\"\nlowercase(s) |&gt; println\ns[1] |&gt; println\n\nwelcome home\nW",
+    "crumbs": [
+      "Types",
+      "basics"
+    ]
+  },
+  {
+    "objectID": "types/tables.html",
+    "href": "types/tables.html",
+    "title": "types",
+    "section": "",
+    "text": "0.1 Packages\n\nimport Pkg; \nPkg.add(\"TypedTables\");\nPkg.add(\"DataFrames\");\n\n\n\n0.2 Categorical and Numerical Data\n\n0.2.1 Tables\n\n# Data\nstudents = [\"Alice\", \"Bob\", \"Callie\",\"Danny\"]\nmarks = [84, 53, 66,  80]\ngrades = ['A', 'C', 'B', 'A'] \n\n\n\n0.2.2 TypedTable.jl\n\nusing TypedTables\n  tbl = Table(\n    names = students,\n    marks = marks,\n    grades = grades\n  )\n  tbl |&gt; display\n  tbl[1]\n\nTable with 3 columns and 4 rows:\n     names   marks  grades\n   ┌──────────────────────\n 1 │ Alice   84     A\n 2 │ Bob     53     C\n 3 │ Callie  66     B\n 4 │ Danny   80     A\n\n\n(names = \"Alice\", marks = 84, grades = 'A')\n\n\n(Note: PrettyTables::pretty_table does not format well in quarto, use TypedTable:: Table).\n\n\n0.2.3 DataFrames.jl\n\nusing DataFrames\ndf = DataFrame(\n   Names = students,\n   Marks = marks,\n   Grades = grades\n)\ndf |&gt; display\ndf |&gt; Table\n\n4×3 DataFrame\n\n\n\nRow\nNames\nMarks\nGrades\n\n\n\nString\nInt64\nChar\n\n\n\n\n1\nAlice\n84\nA\n\n\n2\nBob\n53\nC\n\n\n3\nCallie\n66\nB\n\n\n4\nDanny\n80\nA\n\n\n\n\n\n\nTable with 3 columns and 4 rows:\n     Names   Marks  Grades\n   ┌──────────────────────\n 1 │ Alice   84     A\n 2 │ Bob     53     C\n 3 │ Callie  66     B\n 4 │ Danny   80     A",
+    "crumbs": [
+      "Types",
+      "tables"
+    ]
+  },
+  {
+    "objectID": "types/tables.html#simple-data-types-in-julia",
+    "href": "types/tables.html#simple-data-types-in-julia",
+    "title": "types",
+    "section": "1 Simple Data Types in Julia",
+    "text": "1 Simple Data Types in Julia\nThe usual basic types of integer, floats, boolean, character and strings are available.\n\ntypeof(3) |&gt; println\ntypeof(3.14) |&gt; println\ntypeof(pi) |&gt; println\nBool(3.14==pi) |&gt; println\n\nInt64\nFloat64\nIrrational{:π}\nfalse\n\n\n\n1.1 Tuples, Vectors and Arrays\n\n# tuple\na = (1,2,'3') |&gt; typeof |&gt; println\n# vector\nb = [1,2,3] |&gt; typeof |&gt; println\n# matrix\nC = [1 2 3; 4 5 6] |&gt; typeof |&gt; println\n\nTuple{Int64, Int64, Char}\nVector{Int64}\nMatrix{Int64}\n\n\n\n\n1.2 Named Tuple\n\n\n1.3 Strings\n\ns = \"Welcome Home\"\nlowercase(s) |&gt; println\ns[1] |&gt; println\n\nwelcome home\nW\n\n\n\n\n1.4 Categorical and Numerical Data\n\n1.4.1 Tables\n\n# Data\nstudents = [\"Alice\", \"Bob\", \"Callie\",\"Danny\"]\nmarks = [84, 53, 66,  80]\ngrades = ['A', 'C', 'B', 'A'] \n\n4-element Vector{Char}:\n 'A': ASCII/Unicode U+0041 (category Lu: Letter, uppercase)\n 'C': ASCII/Unicode U+0043 (category Lu: Letter, uppercase)\n 'B': ASCII/Unicode U+0042 (category Lu: Letter, uppercase)\n 'A': ASCII/Unicode U+0041 (category Lu: Letter, uppercase)\n\n\n\n\n1.4.2 TypedTable.jl\n\nimport Pkg; Pkg.add(\"TypedTables\")\nusing TypedTables\n  tTable = Table(\n    names = students,\n    marks = marks,\n    grades = grades\n  )\n  tTable |&gt; display\n  tTable[1]\n\nTable with 3 columns and 4 rows:\n     names   marks  grades\n   ┌──────────────────────\n 1 │ Alice   84     A\n 2 │ Bob     53     C\n 3 │ Callie  66     B\n 4 │ Danny   80     A\n\n\n(names = \"Alice\", marks = 84, grades = 'A')\n\n\n\n\n1.4.3 PrettyTables.jl\n\nusing PrettyTables\n\n\n\n1.4.4 DataFrames.jl\n\nusing DataFrames\ndf = DataFrame(\n   Names = students,\n   Marks = marks,\n   Grades = grades\n)\ndf\n\n4×3 DataFrame\n\n\n\nRow\nNames\nMarks\nGrades\n\n\n\nString\nInt64\nChar\n\n\n\n\n1\nAlice\n84\nA\n\n\n2\nBob\n53\nC\n\n\n3\nCallie\n66\nB\n\n\n4\nDanny\n80\nA",
+    "crumbs": [
+      "Types",
+      "tables"
+    ]
+  },
+  {
+    "objectID": "dataFrame/textEntry.html",
+    "href": "dataFrame/textEntry.html",
+    "title": "textEntry in Julia",
+    "section": "",
+    "text": "For general data reading in Julia, DataFrames.jl is widely used. Additionally, CSV.jl is often used in conjunction with DataFrames.jl for reading CSV files.\n\n0.1 Data\nname   sex\nAlice   F\nBob     M\nCallie  F\nDanny   M\n\n\n0.2 Matrix (by rows) to DataFrame\n\nusing DataFrames\n\nmat = [\"Bob\" 53; \"Alice\" 84; \"Callie\" 66; \"Danny\" 80]\ncnames = [\"name\", \"marks\"]\ndf1 = DataFrame(mat, cnames)\ndf1\n\n4×2 DataFrame\n\n\n\nRow\nname\nmarks\n\n\n\nAny\nAny\n\n\n\n\n1\nBob\n53\n\n\n2\nAlice\n84\n\n\n3\nCallie\n66\n\n\n4\nDanny\n80\n\n\n\n\n\n\n\n\n0.3 Dict to DataFrame\n\ndict = Dict(\"name\"=&gt;[\"Alice\",\"Bob\",\"Callie\",\"Danny\"],\n               \"sex\"=&gt;[\"F\",\"M\",\"F\",\"M\"])\ndf2 = DataFrame(dict)\n\n4×2 DataFrame\n\n\n\nRow\nname\nsex\n\n\n\nString\nString\n\n\n\n\n1\nAlice\nF\n\n\n2\nBob\nM\n\n\n3\nCallie\nF\n\n\n4\nDanny\nM\n\n\n\n\n\n\n\n\n0.4 Space separated-single vector (v) - Cut and Pasted\nSource: Example 8.17 Devore\nData: tip percentages\n\n22.7 16.3 13.6 16.8 29.9 15.9 14.0 15.0 14.1 18.1 22.8 27.6 \n16.4 16.1 19.0 13.5 18.9 20.2 19.7 18.2 15.4 15.7 19.0 11.5 \n18.4 16.0 16.9 12.0 40.1 19.2\n\n# assign data as a single string \n# parse as a vector using split(input,' ')\n\ntxt = \"22.7 16.3 13.6 16.8 29.9 15.9 14.0 15.0 14.1 18.1 22.8 27.6 \n16.4 16.1 19.0 13.5 18.9 20.2 19.7 18.2 15.4 15.7 19.0 11.5 \n18.4 16.0 16.9 12.0 40.1 19.2\"\nvec = parse.(Float64, split(txt, ' '))\nvec |&gt; typeof\n\n\nVector{Float64} (alias for Array{Float64, 1})\n\n\n\n\n\n0.5 Using CSV\nData\nID      Test1 Test2 Exam \nSD101    11    48   61 \nSD102     8    43   77 \nSD103    13    15   49\nSD104    15    20   57\nSD105    10    40   82\nSD106    11    23   65 \nSD107     6    24   46\nSD108    12    47   80\nSD109    10    21   48\nSD110     7    27   62\n\nusing CSV, DataFrames\n\n# see CSV.jl doc under \"Fixed width files\"\n# assign raw data\ntxt = \"ID      Test1 Test2 Exam \nSD101    11    48   61 \nSD102     8    43   77 \nSD103    13    15   49\nSD104    15    20   57\nSD105    10    40   82\nSD106    11    23   65 \nSD107     6    24   46\nSD108    12    47   80\nSD109    10    21   48\nSD110     7    27   62\"\n\n# tidy raw text to file\nfile=CSV.File(IOBuffer(txt); delim=' ', ignorerepeated=true)\ndf = DataFrame(file)\n\n10×4 DataFrame\n\n\n\nRow\nID\nTest1\nTest2\nExam\n\n\n\nString7\nInt64\nInt64\nInt64\n\n\n\n\n1\nSD101\n11\n48\n61\n\n\n2\nSD102\n8\n43\n77\n\n\n3\nSD103\n13\n15\n49\n\n\n4\nSD104\n15\n20\n57\n\n\n5\nSD105\n10\n40\n82\n\n\n6\nSD106\n11\n23\n65\n\n\n7\nSD107\n6\n24\n46\n\n\n8\nSD108\n12\n47\n80\n\n\n9\nSD109\n10\n21\n48\n\n\n10\nSD110\n7\n27\n62\n\n\n\n\n\n\n\n\n0.6 csv"
+  },
+  {
+    "objectID": "dataFrame/importExport.html",
+    "href": "dataFrame/importExport.html",
+    "title": "import Export to DataFrames",
+    "section": "",
+    "text": "For general data reading in Julia, DataFrames.jl is widely used. Additionally, CSV.jl is often used in conjunction with DataFrames.jl for reading CSV files.\n\n0.1 1. Entered numbers\n\nusing DataFrames\n\na = [1,2,3,4]\nb = [\"M\",\"F\",\"F\",\"M\"]\nDataFrame(a=1:4, b=[\"M\", \"F\", \"F\", \"M\"])\n\n4×2 DataFrame\n\n\n\nRow\na\nb\n\n\n\nInt64\nString\n\n\n\n\n1\n1\nM\n\n\n2\n2\nF\n\n\n3\n3\nF\n\n\n4\n4\nM\n\n\n\n\n\n\n\n\n0.2 2. Cut and Pasted\n\n\n0.3 3. csv",
+    "crumbs": [
+      "DataFrames",
+      "importExport"
+    ]
+  },
+  {
+    "objectID": "quartoJ.html",
+    "href": "quartoJ.html",
+    "title": "quartoJ",
+    "section": "",
+    "text": "Julia is supported by Quarto through Julia code chunk (type ```julia or use /julia ).\n{julia}\n1+1\n\n1+1\n\n2\n\n\n\n0.1 Julia version\n# in julia code chunk type:\n# or terminal type: `julia --version`\nVERSION\n\nVERSION\n\nv\"1.11.6\"\n\n\n\n\n0.2 Add Package\n{julia}\n#| warning: FALSE\nimport Pkg; Pkg.add(\"Plots\"); Pkg.add(\"Pipe\")\n\nimport Pkg; Pkg.add(\"Plots\"); Pkg.add(\"Pipe\")\n\n\n\n0.3 Using Julia Package\nFigure 1 below as an example.\n\n# label: fig-parametric\n# fig-cap: \"Parametric Plots\"\"\n\nusing Plots\nplot(sin, \n     x-&gt;sin(2x), \n     0, 2π, \n     leg=false, \n     fill=(0,:lavender))\nplot!(size=(300,200))\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 1: Parametric Plots\n\n\n\n\n\n\n0.4 Using Pipe\n\nusing Pipe\n# allows for _underscore as placeholder for var\n@pipe pi |&gt; round(_, digits=4) |&gt; println\n\n3.1416",
+    "crumbs": [
+      "Preface",
+      "quartoJ"
+    ]
+  },
+  {
+    "objectID": "dataframe/importExport.html",
+    "href": "dataframe/importExport.html",
+    "title": "import Export to DataFrames",
+    "section": "",
+    "text": "Summary:",
+    "crumbs": [
+      "DataFrames",
+      "importExport"
+    ]
+  },
+  {
+    "objectID": "dataframe/textEntry.html#parsing-data",
+    "href": "dataframe/textEntry.html#parsing-data",
+    "title": "textEntry in Julia",
+    "section": "1 Parsing data",
+    "text": "1 Parsing data\n\n1.1 Space separated-single vector (v) - Cut and Pasted\nSource: Example 8.17 Devore\nData: tip percentages\n\n22.7 16.3 13.6 16.8 29.9 15.9 14.0 15.0 14.1 18.1 22.8 27.6 \n16.4 16.1 19.0 13.5 18.9 20.2 19.7 18.2 15.4 15.7 19.0 11.5 \n18.4 16.0 16.9 12.0 40.1 19.2\n\n# assign data as a single string \n# parse as a vector using split(input,' ')\n\ntxt = \"22.7 16.3 13.6 16.8 29.9 15.9 14.0 15.0 14.1 18.1 22.8 27.6 \n16.4 16.1 19.0 13.5 18.9 20.2 19.7 18.2 15.4 15.7 19.0 11.5 \n18.4 16.0 16.9 12.0 40.1 19.2\"\nvec = parse.(Float64, split(txt, ' '))\nvec |&gt; typeof\n\n\nVector{Float64} (alias for Array{Float64, 1})",
+    "crumbs": [
+      "DataFrames",
+      "textEntry"
+    ]
+  },
+  {
+    "objectID": "dataframe/textEntry.html#dataframe-data",
+    "href": "dataframe/textEntry.html#dataframe-data",
+    "title": "textEntry in Julia",
+    "section": "2 DataFrame Data",
+    "text": "2 DataFrame Data\nname   sex\nAlice   F\nBob     M\nCallie  F\nDanny   M\n\n2.1 Matrix to DataFrame\n\nusing DataFrames\n\n# enter data as a matrix - row wise\n# enter colnames as a vector\n\nmat = [\"Bob\" 53; \"Alice\" 84; \"Callie\" 66; \"Danny\" 80]\ncnames = [\"name\", \"marks\"]\ndf1 = DataFrame(mat, cnames)\ndf1\n\n4×2 DataFrame\n\n\n\nRow\nname\nmarks\n\n\n\nAny\nAny\n\n\n\n\n1\nBob\n53\n\n\n2\nAlice\n84\n\n\n3\nCallie\n66\n\n\n4\nDanny\n80\n\n\n\n\n\n\n\n\n2.2 Dict to DataFrame\n\n# DataFrame takes a Dict structure directly\n\ndict = Dict(\"name\"=&gt;[\"Alice\",\"Bob\",\"Callie\",\"Danny\"],\n             \"sex\"=&gt;[\"F\",\"M\",\"F\",\"M\"])\ndf2 = DataFrame(dict)\n\n4×2 DataFrame\n\n\n\nRow\nname\nsex\n\n\n\nString\nString\n\n\n\n\n1\nAlice\nF\n\n\n2\nBob\nM\n\n\n3\nCallie\nF\n\n\n4\nDanny\nM\n\n\n\n\n\n\n\n\n2.3 Using CSV - IOBuffer\nsee documentation at CSV.jl\n\n2.3.1 Columnar Data\nID      Test1 Test2 Exam \nSD101    11    48   61 \nSD102     8    43   77 \nSD103    13    15   49\nSD104    15    20   57\nSD105    10    40   82\nSD106    11    23   65 \nSD107     6    24   46\nSD108    12    47   80\nSD109    10    21   48\nSD110     7    27   62\n\nusing CSV, DataFrames\nusing TypedTables\n\n# see CSV.jl doc under \"Fixed width files\"\n# assign raw data\ntxt = \"ID      Test1 Test2 Exam \nSD101    11    48   61 \nSD102     8    43   77 \nSD103    13    15   49\nSD104    15    20   57\nSD105    10    40   82\nSD106    11    23   65 \nSD107     6    24   46\nSD108    12    47   80\nSD109    10    21   48\nSD110     7    27   62\"\n\n# tidy raw text to file\nfile=CSV.File(IOBuffer(txt); delim=' ', ignorerepeated=true)\ndf = DataFrame(file) |&gt; Table\n\nTable with 4 columns and 10 rows:\n      ID     Test1  Test2  Exam\n    ┌──────────────────────────\n 1  │ SD101  11     48     61\n 2  │ SD102  8      43     77\n 3  │ SD103  13     15     49\n 4  │ SD104  15     20     57\n 5  │ SD105  10     40     82\n 6  │ SD106  11     23     65\n 7  │ SD107  6      24     46\n 8  │ SD108  12     47     80\n 9  │ SD109  10     21     48\n 10 │ SD110  7      27     62",
+    "crumbs": [
+      "DataFrames",
+      "textEntry"
+    ]
+  },
+  {
+    "objectID": "dataframe/importExport.html#importing-.csv-file",
+    "href": "dataframe/importExport.html#importing-.csv-file",
+    "title": "import Export to DataFrames",
+    "section": "1 Importing .csv file",
+    "text": "1 Importing .csv file\n\nchange column names with rename!\n\n\nimport Pkg; Pkg.add(\"CSV\"); Pkg.add(\"DataFrames\")\nusing CSV, DataFrames\n\ndf = CSV.read(\"grades.csv\", header=0, DataFrame)\nrename!(df,[:ID,:Test1,:Test2,:Exam])\ndf \n\n10×4 DataFrame\n\n\n\nRow\nID\nTest1\nTest2\nExam\n\n\n\nString7\nInt64\nInt64\nInt64\n\n\n\n\n1\nSD101\n11\n48\n61\n\n\n2\nSD102\n8\n43\n77\n\n\n3\nSD103\n13\n15\n49\n\n\n4\nSD104\n15\n20\n57\n\n\n5\nSD105\n10\n40\n82\n\n\n6\nSD106\n11\n23\n65\n\n\n7\nSD107\n6\n24\n46\n\n\n8\nSD108\n12\n47\n80\n\n\n9\nSD109\n10\n21\n48\n\n\n10\nSD110\n7\n27\n62",
+    "crumbs": [
+      "DataFrames",
+      "importExport"
+    ]
+  },
+  {
+    "objectID": "dataframe/wrangle.html",
+    "href": "dataframe/wrangle.html",
+    "title": "wrangle",
+    "section": "",
+    "text": "using CSV, DataFrames\nusing TypedTables\nusing DataFramesMeta",
+    "crumbs": [
+      "DataFrames",
+      "wrangle"
+    ]
+  },
+  {
+    "objectID": "dataframe/wrangle.html#data",
+    "href": "dataframe/wrangle.html#data",
+    "title": "wrangle",
+    "section": "2 Data",
+    "text": "2 Data\n\n# reading csv data-file with CSV.jl\n\ndf = CSV.read(\"grades.csv\", header=0, DataFrame)\nrename!(df,[:ID,:Test1,:Test2,:Exam])\ndf |&gt; display\ndf |&gt; Table\n\n10×4 DataFrame\n\n\n\nRow\nID\nTest1\nTest2\nExam\n\n\n\nString7\nInt64\nInt64\nInt64\n\n\n\n\n1\nSD101\n11\n48\n61\n\n\n2\nSD102\n8\n43\n77\n\n\n3\nSD103\n13\n15\n49\n\n\n4\nSD104\n15\n20\n57\n\n\n5\nSD105\n10\n40\n82\n\n\n6\nSD106\n11\n23\n65\n\n\n7\nSD107\n6\n24\n46\n\n\n8\nSD108\n12\n47\n80\n\n\n9\nSD109\n10\n21\n48\n\n\n10\nSD110\n7\n27\n62\n\n\n\n\n\n\nTable with 4 columns and 10 rows:\n      ID     Test1  Test2  Exam\n    ┌──────────────────────────\n 1  │ SD101  11     48     61\n 2  │ SD102  8      43     77\n 3  │ SD103  13     15     49\n 4  │ SD104  15     20     57\n 5  │ SD105  10     40     82\n 6  │ SD106  11     23     65\n 7  │ SD107  6      24     46\n 8  │ SD108  12     47     80\n 9  │ SD109  10     21     48\n 10 │ SD110  7      27     62\n\n\n\n2.1 Referencing column or row\n\n# row\ndf[:3,:] |&gt; display\n\n# column\ndf[:,[:Test1,:Test2]] |&gt; Table |&gt; display\n# or\ndf.Test1\n\nDataFrameRow (4 columns)\n\n\n\nRow\nID\nTest1\nTest2\nExam\n\n\n\nString7\nInt64\nInt64\nInt64\n\n\n\n\n3\nSD103\n13\n15\n49\n\n\n\n\n\n\nTable with 2 columns and 10 rows:\n      Test1  Test2\n    ┌─────────────\n 1  │ 11     48\n 2  │ 8      43\n 3  │ 13     15\n 4  │ 15     20\n 5  │ 10     40\n 6  │ 11     23\n 7  │ 6      24\n 8  │ 12     47\n 9  │ 10     21\n 10 │ 7      27\n\n\n10-element Vector{Int64}:\n 11\n  8\n 13\n 15\n 10\n 11\n  6\n 12\n 10\n  7",
+    "crumbs": [
+      "DataFrames",
+      "wrangle"
+    ]
+  },
+  {
+    "objectID": "dataframe/recode.html",
+    "href": "dataframe/recode.html",
+    "title": "recode",
+    "section": "",
+    "text": "using DataFrames, TypedTables\n\nmat = [0 31.9; 0 32.0; 1 39.0; 1 32.3; 0 41.0]\ncnames = [\"Disease\",\"Biomarker\"]\n\ndf=DataFrame(mat,cnames)\ndf |&gt; Table\n\nTable with 2 columns and 5 rows:\n     Disease  Biomarker\n   ┌───────────────────\n 1 │ 0.0      31.9\n 2 │ 0.0      32.0\n 3 │ 1.0      39.0\n 4 │ 1.0      32.3\n 5 │ 0.0      41.0\n\n\n\n\n\ndf.Disease = replace(df.Disease, 0 =&gt; \"noCancer\", 1=&gt;\"Cancer\")\ndf\n\n5×2 DataFrame\n\n\n\nRow\nDisease\nBiomarker\n\n\n\nAny\nFloat64\n\n\n\n\n1\nnoCancer\n31.9\n\n\n2\nnoCancer\n32.0\n\n\n3\nCancer\n39.0\n\n\n4\nCancer\n32.3\n\n\n5\nnoCancer\n41.0",
+    "crumbs": [
+      "DataFrames",
+      "recode"
+    ]
+  },
+  {
+    "objectID": "dataframe/recode.html#data",
+    "href": "dataframe/recode.html#data",
+    "title": "recode",
+    "section": "",
+    "text": "using DataFrames, TypedTables\n\nmat = [0 31.9; 0 32.0; 1 39.0; 1 32.3; 0 41.0]\ncnames = [\"Disease\",\"Biomarker\"]\n\ndf=DataFrame(mat,cnames)\ndf |&gt; Table\n\nTable with 2 columns and 5 rows:\n     Disease  Biomarker\n   ┌───────────────────\n 1 │ 0.0      31.9\n 2 │ 0.0      32.0\n 3 │ 1.0      39.0\n 4 │ 1.0      32.3\n 5 │ 0.0      41.0\n\n\n\n\n\ndf.Disease = replace(df.Disease, 0 =&gt; \"noCancer\", 1=&gt;\"Cancer\")\ndf\n\n5×2 DataFrame\n\n\n\nRow\nDisease\nBiomarker\n\n\n\nAny\nFloat64\n\n\n\n\n1\nnoCancer\n31.9\n\n\n2\nnoCancer\n32.0\n\n\n3\nCancer\n39.0\n\n\n4\nCancer\n32.3\n\n\n5\nnoCancer\n41.0",
+    "crumbs": [
+      "DataFrames",
+      "recode"
+    ]
+  },
+  {
+    "objectID": "dataframe/dfMeta.html",
+    "href": "dataframe/dfMeta.html",
+    "title": "DataFramesMeta",
+    "section": "",
+    "text": "import Pkg; Pkg.add(\"DataFramesMeta\")\nusing TypedTables\n\n\nusing CSV, DataFrames\n\ndf=CSV.read(\"grades.csv\",header=0, DataFrame)\nrename!(df,[:ID,:Test1,:Test2,:Exam])\ndf |&gt; display\ndf |&gt; Table\n\n10×4 DataFrame\n\n\n\nRow\nID\nTest1\nTest2\nExam\n\n\n\nString7\nInt64\nInt64\nInt64\n\n\n\n\n1\nSD101\n11\n48\n61\n\n\n2\nSD102\n8\n43\n77\n\n\n3\nSD103\n13\n15\n49\n\n\n4\nSD104\n15\n20\n57\n\n\n5\nSD105\n10\n40\n82\n\n\n6\nSD106\n11\n23\n65\n\n\n7\nSD107\n6\n24\n46\n\n\n8\nSD108\n12\n47\n80\n\n\n9\nSD109\n10\n21\n48\n\n\n10\nSD110\n7\n27\n62\n\n\n\n\n\n\nTable with 4 columns and 10 rows:\n      ID     Test1  Test2  Exam\n    ┌──────────────────────────\n 1  │ SD101  11     48     61\n 2  │ SD102  8      43     77\n 3  │ SD103  13     15     49\n 4  │ SD104  15     20     57\n 5  │ SD105  10     40     82\n 6  │ SD106  11     23     65\n 7  │ SD107  6      24     46\n 8  │ SD108  12     47     80\n 9  │ SD109  10     21     48\n 10 │ SD110  7      27     62\n\n\n\n\n\n# row\ndf[:3, :] |&gt; display\n\n# column\ndf[:,[:Test1,:Test2]] |&gt; display\ndf.Test1\n\nDataFrameRow (4 columns)\n\n\n\nRow\nID\nTest1\nTest2\nExam\n\n\n\nString7\nInt64\nInt64\nInt64\n\n\n\n\n3\nSD103\n13\n15\n49\n\n\n\n\n\n\n10×2 DataFrame\n\n\n\nRow\nTest1\nTest2\n\n\n\nInt64\nInt64\n\n\n\n\n1\n11\n48\n\n\n2\n8\n43\n\n\n3\n13\n15\n\n\n4\n15\n20\n\n\n5\n10\n40\n\n\n6\n11\n23\n\n\n7\n6\n24\n\n\n8\n12\n47\n\n\n9\n10\n21\n\n\n10\n7\n27\n\n\n\n\n\n\n10-element Vector{Int64}:\n 11\n  8\n 13\n 15\n 10\n 11\n  6\n 12\n 10\n  7"
+  },
+  {
+    "objectID": "dataframe/dfMeta.html#data",
+    "href": "dataframe/dfMeta.html#data",
+    "title": "DataFramesMeta",
+    "section": "",
+    "text": "import Pkg; Pkg.add(\"DataFramesMeta\")\nusing TypedTables\n\n\nusing CSV, DataFrames\n\ndf=CSV.read(\"grades.csv\",header=0, DataFrame)\nrename!(df,[:ID,:Test1,:Test2,:Exam])\ndf |&gt; display\ndf |&gt; Table\n\n10×4 DataFrame\n\n\n\nRow\nID\nTest1\nTest2\nExam\n\n\n\nString7\nInt64\nInt64\nInt64\n\n\n\n\n1\nSD101\n11\n48\n61\n\n\n2\nSD102\n8\n43\n77\n\n\n3\nSD103\n13\n15\n49\n\n\n4\nSD104\n15\n20\n57\n\n\n5\nSD105\n10\n40\n82\n\n\n6\nSD106\n11\n23\n65\n\n\n7\nSD107\n6\n24\n46\n\n\n8\nSD108\n12\n47\n80\n\n\n9\nSD109\n10\n21\n48\n\n\n10\nSD110\n7\n27\n62\n\n\n\n\n\n\nTable with 4 columns and 10 rows:\n      ID     Test1  Test2  Exam\n    ┌──────────────────────────\n 1  │ SD101  11     48     61\n 2  │ SD102  8      43     77\n 3  │ SD103  13     15     49\n 4  │ SD104  15     20     57\n 5  │ SD105  10     40     82\n 6  │ SD106  11     23     65\n 7  │ SD107  6      24     46\n 8  │ SD108  12     47     80\n 9  │ SD109  10     21     48\n 10 │ SD110  7      27     62\n\n\n\n\n\n# row\ndf[:3, :] |&gt; display\n\n# column\ndf[:,[:Test1,:Test2]] |&gt; display\ndf.Test1\n\nDataFrameRow (4 columns)\n\n\n\nRow\nID\nTest1\nTest2\nExam\n\n\n\nString7\nInt64\nInt64\nInt64\n\n\n\n\n3\nSD103\n13\n15\n49\n\n\n\n\n\n\n10×2 DataFrame\n\n\n\nRow\nTest1\nTest2\n\n\n\nInt64\nInt64\n\n\n\n\n1\n11\n48\n\n\n2\n8\n43\n\n\n3\n13\n15\n\n\n4\n15\n20\n\n\n5\n10\n40\n\n\n6\n11\n23\n\n\n7\n6\n24\n\n\n8\n12\n47\n\n\n9\n10\n21\n\n\n10\n7\n27\n\n\n\n\n\n\n10-element Vector{Int64}:\n 11\n  8\n 13\n 15\n 10\n 11\n  6\n 12\n 10\n  7"
+  },
+  {
+    "objectID": "dataframe/dfMeta.html#using-dataframesmeta",
+    "href": "dataframe/dfMeta.html#using-dataframesmeta",
+    "title": "DataFramesMeta",
+    "section": "2 Using DataFramesMeta",
+    "text": "2 Using DataFramesMeta\nUse DataFramesMeta.jl for data wrangling. More intuitive then just DataFrames.jl See chapter 5 of Julia Data Science\n\nusing DataFramesMeta\n\n\n2.1 Choose columns using @select\n\n@select df :Test1 :Test2\n\n10×2 DataFrame\n\n\n\nRow\nTest1\nTest2\n\n\n\nInt64\nInt64\n\n\n\n\n1\n11\n48\n\n\n2\n8\n43\n\n\n3\n13\n15\n\n\n4\n15\n20\n\n\n5\n10\n40\n\n\n6\n11\n23\n\n\n7\n6\n24\n\n\n8\n12\n47\n\n\n9\n10\n21\n\n\n10\n7\n27\n\n\n\n\n\n\n\n\n2.2 Add New Calcuated Column (mutate)\n\n@rtransform df begin\n:WtAvg = :Test1*0.25 + :Test2*0.25 + :Exam*0.5\nend\n\n10×5 DataFrame\n\n\n\nRow\nID\nTest1\nTest2\nExam\nWtAvg\n\n\n\nString7\nInt64\nInt64\nInt64\nFloat64\n\n\n\n\n1\nSD101\n11\n48\n61\n45.25\n\n\n2\nSD102\n8\n43\n77\n51.25\n\n\n3\nSD103\n13\n15\n49\n31.5\n\n\n4\nSD104\n15\n20\n57\n37.25\n\n\n5\nSD105\n10\n40\n82\n53.5\n\n\n6\nSD106\n11\n23\n65\n41.0\n\n\n7\nSD107\n6\n24\n46\n30.5\n\n\n8\nSD108\n12\n47\n80\n54.75\n\n\n9\nSD109\n10\n21\n48\n31.75\n\n\n10\nSD110\n7\n27\n62\n39.5\n\n\n\n\n\n\n\n\n2.3 Subset rows by criteria (filter)"
+  },
+  {
+    "objectID": "dataframe/wrangle.html#packages",
+    "href": "dataframe/wrangle.html#packages",
+    "title": "wrangle",
+    "section": "",
+    "text": "using CSV, DataFrames\nusing TypedTables\nusing DataFramesMeta",
+    "crumbs": [
+      "DataFrames",
+      "wrangle"
+    ]
+  },
+  {
+    "objectID": "dataframe/wrangle.html#using-dataframesmeta",
+    "href": "dataframe/wrangle.html#using-dataframesmeta",
+    "title": "wrangle",
+    "section": "2 Using DataFramesMeta",
+    "text": "2 Using DataFramesMeta\nUse DataFramesMeta.jl for data wrangling - syntax more intuitive than DataFrames.jl See Chapter 5 of Julia Data Science",
+    "crumbs": [
+      "DataFrames",
+      "wrangle"
+    ]
+  },
+  {
+    "objectID": "dataframe/wrangle.html#select",
+    "href": "dataframe/wrangle.html#select",
+    "title": "wrangle",
+    "section": "4 Select",
+    "text": "4 Select\n\n4.1 Choose columns by indices\n\n# choose rows and column by indexing\ndf[1:3,1:3] |&gt; Table\n\nTable with 3 columns and 3 rows:\n     ID     Test1  Test2\n   ┌────────────────────\n 1 │ SD101  11     48\n 2 │ SD102  8      43\n 3 │ SD103  13     15\n\n\n\n\n4.2 Choose columns by @select\n\n# use select to choose columns\n@select(df, :Test1, :Test2, :Exam) |&gt; Table\n\nTable with 3 columns and 10 rows:\n      Test1  Test2  Exam\n    ┌───────────────────\n 1  │ 11     48     61\n 2  │ 8      43     77\n 3  │ 13     15     49\n 4  │ 15     20     57\n 5  │ 10     40     82\n 6  │ 11     23     65\n 7  │ 6      24     46\n 8  │ 12     47     80\n 9  │ 10     21     48\n 10 │ 7      27     62",
+    "crumbs": [
+      "DataFrames",
+      "wrangle"
+    ]
+  },
+  {
+    "objectID": "dataframe/wrangle.html#filter",
+    "href": "dataframe/wrangle.html#filter",
+    "title": "wrangle",
+    "section": "4 Filter",
+    "text": "4 Filter\n\n4.1 Subset rows by criteria (DataFrame::ByRow)\n\nsubset(df, :Exam =&gt; x -&gt; x .&lt; 50) |&gt; Table\n\nTable with 4 columns and 3 rows:\n     ID     Test1  Test2  Exam\n   ┌──────────────────────────\n 1 │ SD103  13     15     49\n 2 │ SD107  6      24     46\n 3 │ SD109  10     21     48\n\n\n\nsubset(df, :ID =&gt; ByRow(x -&gt; x ==\"SD110\")) |&gt; Table\n\nTable with 4 columns and 1 row:\n     ID     Test1  Test2  Exam\n   ┌──────────────────────────\n 1 │ SD110  7      27     62\n\n\n\n\n4.2 Subset with @rsubset\n\n@rsubset df :Exam &lt; 50 \n\n3×4 DataFrame\n\n\n\nRow\nID\nTest1\nTest2\nExam\n\n\n\nString7\nInt64\nInt64\nInt64\n\n\n\n\n1\nSD103\n13\n15\n49\n\n\n2\nSD107\n6\n24\n46\n\n\n3\nSD109\n10\n21\n48\n\n\n\n\n\n\n\n@rsubset df :ID==\"SD110\"\n\n1×4 DataFrame\n\n\n\nRow\nID\nTest1\nTest2\nExam\n\n\n\nString7\nInt64\nInt64\nInt64\n\n\n\n\n1\nSD110\n7\n27\n62",
+    "crumbs": [
+      "DataFrames",
+      "wrangle"
+    ]
+  },
+  {
+    "objectID": "dataframe/wrangle.html#arrange",
+    "href": "dataframe/wrangle.html#arrange",
+    "title": "wrangle",
+    "section": "5 Arrange",
+    "text": "5 Arrange\n\n5.1 Sort column (sort)\n\nsort(df, :Exam, rev=true) |&gt; Table\n\nTable with 4 columns and 10 rows:\n      ID     Test1  Test2  Exam\n    ┌──────────────────────────\n 1  │ SD105  10     40     82\n 2  │ SD108  12     47     80\n 3  │ SD102  8      43     77\n 4  │ SD106  11     23     65\n 5  │ SD110  7      27     62\n 6  │ SD101  11     48     61\n 7  │ SD104  15     20     57\n 8  │ SD103  13     15     49\n 9  │ SD109  10     21     48\n 10 │ SD107  6      24     46\n\n\n\n@orderby(df, :Exam)\n\n10×4 DataFrame\n\n\n\nRow\nID\nTest1\nTest2\nExam\n\n\n\nString7\nInt64\nInt64\nInt64\n\n\n\n\n1\nSD107\n6\n24\n46\n\n\n2\nSD109\n10\n21\n48\n\n\n3\nSD103\n13\n15\n49\n\n\n4\nSD104\n15\n20\n57\n\n\n5\nSD101\n11\n48\n61\n\n\n6\nSD110\n7\n27\n62\n\n\n7\nSD106\n11\n23\n65\n\n\n8\nSD102\n8\n43\n77\n\n\n9\nSD108\n12\n47\n80\n\n\n10\nSD105\n10\n40\n82\n\n\n\n\n\n\n\n\n5.2 Transform with @rtransform\n\n5.2.1 Add new Calculated Column (@rtransform)\n\n# use filter to choose rows\n@rtransform df begin\n  :WtAge = :Test1*0.25 + :Test2*0.25 + :Exam*0.50\nend\n\n10×5 DataFrame\n\n\n\nRow\nID\nTest1\nTest2\nExam\nWtAge\n\n\n\nString7\nInt64\nInt64\nInt64\nFloat64\n\n\n\n\n1\nSD101\n11\n48\n61\n45.25\n\n\n2\nSD102\n8\n43\n77\n51.25\n\n\n3\nSD103\n13\n15\n49\n31.5\n\n\n4\nSD104\n15\n20\n57\n37.25\n\n\n5\nSD105\n10\n40\n82\n53.5\n\n\n6\nSD106\n11\n23\n65\n41.0\n\n\n7\nSD107\n6\n24\n46\n30.5\n\n\n8\nSD108\n12\n47\n80\n54.75\n\n\n9\nSD109\n10\n21\n48\n31.75\n\n\n10\nSD110\n7\n27\n62\n39.5",
+    "crumbs": [
+      "DataFrames",
+      "wrangle"
+    ]
+  },
+  {
+    "objectID": "dataframe/wrangle.html#section",
+    "href": "dataframe/wrangle.html#section",
+    "title": "wrangle",
+    "section": "7 ",
+    "text": "7",
+    "crumbs": [
+      "DataFrames",
+      "wrangle"
+    ]
+  },
+  {
+    "objectID": "dataframe/pivot.html",
+    "href": "dataframe/pivot.html",
+    "title": "pivot_longer",
+    "section": "",
+    "text": "import Pkg; Pkg.add(\"RDatasets\")\nusing DataFrames\nusing TypedTables\nusing RDatasets",
+    "crumbs": [
+      "DataFrames",
+      "pivot"
+    ]
+  },
+  {
+    "objectID": "dataframe/pivot.html#data",
+    "href": "dataframe/pivot.html#data",
+    "title": "pivot_longer",
+    "section": "",
+    "text": "using DataFrames, TypedTables\n\nstudents = DataFrame(\n  math=[90,85,92],\n  science = [95,88,91],\n  history = [87,92,78]\n)\nstudents |&gt; Table\n\nTable with 3 columns and 3 rows:\n     math  science  history\n   ┌───────────────────────\n 1 │ 90    95       87\n 2 │ 85    88       92\n 3 │ 92    91       78\n\n\n\n\n\nstacked_students = stack(students, 1:3)\nstacked_students |&gt; Table\n\nTable with 2 columns and 9 rows:\n     variable  value\n   ┌────────────────\n 1 │ math      90\n 2 │ math      85\n 3 │ math      92\n 4 │ science   95\n 5 │ science   88\n 6 │ science   91\n 7 │ history   87\n 8 │ history   92\n 9 │ history   78",
+    "crumbs": [
+      "DataFrames",
+      "pivot"
+    ]
+  },
+  {
+    "objectID": "dataframe/pivot.html#stack-pivot-longer",
+    "href": "dataframe/pivot.html#stack-pivot-longer",
+    "title": "pivot_longer",
+    "section": "1 stack (pivot-longer)",
+    "text": "1 stack (pivot-longer)\n\n1.1 Data1 - students\n\n# using DataFrames\n\nstudents = DataFrame(\n  math=[90,85,92],\n  science = [95,88,91],\n  history = [87,92,78]\n)\nstudents |&gt; Table\n\nTable with 3 columns and 3 rows:\n     math  science  history\n   ┌───────────────────────\n 1 │ 90    95       87\n 2 │ 85    88       92\n 3 │ 92    91       78\n\n\n\n\n1.2 Pivot_Long (stack)\n\nstacked_students = stack(students, 1:3)\nstacked_students |&gt; Table\n\nTable with 2 columns and 9 rows:\n     variable  value\n   ┌────────────────\n 1 │ math      90\n 2 │ math      85\n 3 │ math      92\n 4 │ science   95\n 5 │ science   88\n 6 │ science   91\n 7 │ history   87\n 8 │ history   92\n 9 │ history   78\n\n\n\n\n1.3 Data2 - Iris\n\n# using RDatasets\n\niris = dataset(\"datasets\",\"iris\")\nfirst(iris,6)\n\n6×5 DataFrame\n\n\n\nRow\nSepalLength\nSepalWidth\nPetalLength\nPetalWidth\nSpecies\n\n\n\nFloat64\nFloat64\nFloat64\nFloat64\nCat…\n\n\n\n\n1\n5.1\n3.5\n1.4\n0.2\nsetosa\n\n\n2\n4.9\n3.0\n1.4\n0.2\nsetosa\n\n\n3\n4.7\n3.2\n1.3\n0.2\nsetosa\n\n\n4\n4.6\n3.1\n1.5\n0.2\nsetosa\n\n\n5\n5.0\n3.6\n1.4\n0.2\nsetosa\n\n\n6\n5.4\n3.9\n1.7\n0.4\nsetosa\n\n\n\n\n\n\n\n\n1.4 Rearrange iris columns\n\niris2 = select(iris, circshift(names(iris),1))\nfirst(iris2,6)\n\n6×5 DataFrame\n\n\n\nRow\nSpecies\nSepalLength\nSepalWidth\nPetalLength\nPetalWidth\n\n\n\nCat…\nFloat64\nFloat64\nFloat64\nFloat64\n\n\n\n\n1\nsetosa\n5.1\n3.5\n1.4\n0.2\n\n\n2\nsetosa\n4.9\n3.0\n1.4\n0.2\n\n\n3\nsetosa\n4.7\n3.2\n1.3\n0.2\n\n\n4\nsetosa\n4.6\n3.1\n1.5\n0.2\n\n\n5\nsetosa\n5.0\n3.6\n1.4\n0.2\n\n\n6\nsetosa\n5.4\n3.9\n1.7\n0.4\n\n\n\n\n\n\n\niris3 = select(iris, :Species, :)\nfirst(iris3,6)\n\n6×5 DataFrame\n\n\n\nRow\nSpecies\nSepalLength\nSepalWidth\nPetalLength\nPetalWidth\n\n\n\nCat…\nFloat64\nFloat64\nFloat64\nFloat64\n\n\n\n\n1\nsetosa\n5.1\n3.5\n1.4\n0.2\n\n\n2\nsetosa\n4.9\n3.0\n1.4\n0.2\n\n\n3\nsetosa\n4.7\n3.2\n1.3\n0.2\n\n\n4\nsetosa\n4.6\n3.1\n1.5\n0.2\n\n\n5\nsetosa\n5.0\n3.6\n1.4\n0.2\n\n\n6\nsetosa\n5.4\n3.9\n1.7\n0.4\n\n\n\n\n\n\n\n\n1.5 pivot_long (stack)\n\niris_long = stack(iris3, 2:5)\nfirst(iris_long,6)\n\n6×3 DataFrame\n\n\n\nRow\nSpecies\nvariable\nvalue\n\n\n\nCat…\nString\nFloat64\n\n\n\n\n1\nsetosa\nSepalLength\n5.1\n\n\n2\nsetosa\nSepalLength\n4.9\n\n\n3\nsetosa\nSepalLength\n4.7\n\n\n4\nsetosa\nSepalLength\n4.6\n\n\n5\nsetosa\nSepalLength\n5.0\n\n\n6\nsetosa\nSepalLength\n5.4",
+    "crumbs": [
+      "DataFrames",
+      "pivot"
+    ]
+  },
+  {
+    "objectID": "plots/basicPlots.html",
+    "href": "plots/basicPlots.html",
+    "title": "basicPlots",
+    "section": "",
+    "text": "Julia’s default Plots.jl is a good plot environment to use. The default backend is gr() and other backends are plotlyjs, pgfplots and pyplots. It also has recipes such as StatPlots and Distributions . This page lists basic plot examples.\n\ndata entry\nbasic plots (scatter, scatterlines, barplots, histograms, boxplot)"
+  },
+  {
+    "objectID": "plots/basicPlots.html#plots",
+    "href": "plots/basicPlots.html#plots",
+    "title": "basicPlots",
+    "section": "1 Plots",
+    "text": "1 Plots\n\n1.1 ScatterPlot\n\nusing Plots\n\nscatter(iris.SepalWidth, iris.SepalLength,\n  title=\"Scatter Plot\",\n  subtitle=\"Date: 20 May 2025\",\n  xlabel = \"SepalWidth\",\n  ylabel = \"SepalLength\",\n  group = iris.Species\n  )",
+    "crumbs": [
+      "Plots",
+      "basicPlots"
+    ]
+  },
+  {
+    "objectID": "plots/basicPlots.html#plots.jl",
+    "href": "plots/basicPlots.html#plots.jl",
+    "title": "basicPlots",
+    "section": "1 Plots.jl",
+    "text": "1 Plots.jl\nPlots(x,y)\nwhere\nx,y are vectors\nPlots(x,y) in this section works on two vectors or dataframe columns df.x, df.y\n\n1.1 Scatter\n\nusing Plots\nusing TypedTables\n\ntrees |&gt; Table\nscatter(trees.girth, trees.height,\n  title=\"Scatter Points\",\n  subtitle=\"Date: 20 May 2025\",\n  xlabel = \"Girth\",\n  ylabel = \"Height\",\n  group = trees.name,\n  size = (300,300)\n  )\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.2 Scatter-Line\n\n# Girth vs Height plots for Oak and Elm\nusing DataFramesMeta\n\ntree2 = @rsubset(trees, :name in [\"Oak\",\"Elm\"])\ntree2 |&gt; Table\n\nTable with 4 columns and 9 rows:\n     girth  height  age  name\n   ┌─────────────────────────\n 1 │ 40     46.2    15   Elm\n 2 │ 45     48.2    18   Oak\n 3 │ 47     53.2    34   Elm\n 4 │ 51     54.2    18   Oak\n 5 │ 53     52.2    28   Elm\n 6 │ 55     52.0    40   Oak\n 7 │ 60     58.4    50   Elm\n 8 │ 63     57.8    55   Oak\n 9 │ 65     53.4    50   Elm\n\n\n\n# the default for Plots is a scatter-line plot \n\nplot(tree2.girth, tree2.height,\n     markershape=:circle,\n     title=\"Scatter Lines\",\n     xlabel=\"Girth\",\n     ylabel=\"Height\",\n     group = tree2.name,\n     size = (300,300)\n     )\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.3 BarPlot\n\nusing Statistics\n# AvgHeight histogram of different trees\n\n# split-apply-combine\n\ntreesGp = groupby(trees, :name) \ntreesAvg = combine(treesGp, :height =&gt; mean)\ntreesAvg  |&gt; Table\n\nTable with 2 columns and 3 rows:\n     name     height_mean\n   ┌─────────────────────\n 1 │ Elm      52.68\n 2 │ Oak      53.05\n 3 │ Sequoia  65.1333\n\n\n\n# plot barPlot by trees.name\n\nplot(bar(treesAvg.name, treesAvg.height_mean, \n         color=[:lightblue,:lightgreen,:orange], \n         legend=false, size=(300,300),\n         title=\"Avg height of trees\"))\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.4 Histogram\n\n# using 500 randn (random standard normal)\n\nusing Distributions\nx = randn(500)\nhistogram(x, size=(300,300), legend=false)\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.5 BoxPlot\n\n# using RDatasets\nfaithful=dataset(\"datasets\",\"faithful\")\n\nfirst(faithful, 6) |&gt; Table\n\nTable with 2 columns and 6 rows:\n     Eruptions  Waiting\n   ┌───────────────────\n 1 │ 3.6        79\n 2 │ 1.8        54\n 3 │ 3.333      74\n 4 │ 2.283      62\n 5 │ 4.533      85\n 6 │ 2.883      55\n\n\n\nusing StatsPlots\n\nboxplot(faithful.Waiting, size=(200,300), width=0.2, legend=false)\nxlims!(0,2)"
+  },
+  {
+    "objectID": "dataframe/wrangle.html#select-columns",
+    "href": "dataframe/wrangle.html#select-columns",
+    "title": "wrangle",
+    "section": "4 Select columns",
+    "text": "4 Select columns\n\n4.1 Choose columns by @select\n\n# use select to choose columns\n@select(df, :Test1, :Test2, :Exam) |&gt; Table\n\nTable with 3 columns and 10 rows:\n      Test1  Test2  Exam\n    ┌───────────────────\n 1  │ 11     48     61\n 2  │ 8      43     77\n 3  │ 13     15     49\n 4  │ 15     20     57\n 5  │ 10     40     82\n 6  │ 11     23     65\n 7  │ 6      24     46\n 8  │ 12     47     80\n 9  │ 10     21     48\n 10 │ 7      27     62",
+    "crumbs": [
+      "DataFrames",
+      "wrangle"
+    ]
+  },
+  {
+    "objectID": "dataframe/wrangle.html#referencing-column-or-row",
+    "href": "dataframe/wrangle.html#referencing-column-or-row",
+    "title": "wrangle",
+    "section": "1 Referencing column or row",
+    "text": "1 Referencing column or row\n\n# row\ndf[:3,:] |&gt; display\n\n# column\ndf[:,[:Test1,:Test2]] |&gt; Table |&gt; display\n# or\ndf.Test1\n\nDataFrameRow (4 columns)\n\n\n\nRow\nID\nTest1\nTest2\nExam\n\n\n\nString7\nInt64\nInt64\nInt64\n\n\n\n\n3\nSD103\n13\n15\n49\n\n\n\n\n\n\nTable with 2 columns and 10 rows:\n      Test1  Test2\n    ┌─────────────\n 1  │ 11     48\n 2  │ 8      43\n 3  │ 13     15\n 4  │ 15     20\n 5  │ 10     40\n 6  │ 11     23\n 7  │ 6      24\n 8  │ 12     47\n 9  │ 10     21\n 10 │ 7      27\n\n\n10-element Vector{Int64}:\n 11\n  8\n 13\n 15\n 10\n 11\n  6\n 12\n 10\n  7",
+    "crumbs": [
+      "DataFrames",
+      "wrangle"
+    ]
+  },
+  {
+    "objectID": "dataframe/wrangle.html#referencing-columns-or-rows",
+    "href": "dataframe/wrangle.html#referencing-columns-or-rows",
+    "title": "wrangle",
+    "section": "1 Referencing columns or rows",
+    "text": "1 Referencing columns or rows\n\n# row\ndf[:3,:] |&gt; display\n\n# column\ndf[:,[:Test1,:Test2]] |&gt; Table |&gt; display\n# or\ndf.Test1 |&gt; println\n\n# choose rows and column by indexing\ndf[1:3,1:3] |&gt; Table\n\nDataFrameRow (4 columns)\n\n\n\nRow\nID\nTest1\nTest2\nExam\n\n\n\nString7\nInt64\nInt64\nInt64\n\n\n\n\n3\nSD103\n13\n15\n49\n\n\n\n\n\n\nTable with 2 columns and 10 rows:\n      Test1  Test2\n    ┌─────────────\n 1  │ 11     48\n 2  │ 8      43\n 3  │ 13     15\n 4  │ 15     20\n 5  │ 10     40\n 6  │ 11     23\n 7  │ 6      24\n 8  │ 12     47\n 9  │ 10     21\n 10 │ 7      27\n\n\n[11, 8, 13, 15, 10, 11, 6, 12, 10, 7]\n\n\nTable with 3 columns and 3 rows:\n     ID     Test1  Test2\n   ┌────────────────────\n 1 │ SD101  11     48\n 2 │ SD102  8      43\n 3 │ SD103  13     15",
+    "crumbs": [
+      "DataFrames",
+      "wrangle"
+    ]
+  },
+  {
+    "objectID": "dataframe/wrangle.html#columns-or-rows-indexing",
+    "href": "dataframe/wrangle.html#columns-or-rows-indexing",
+    "title": "wrangle",
+    "section": "1 Columns or rows indexing",
+    "text": "1 Columns or rows indexing\n\n# row,col\ndf[:3,:] |&gt; display\n\nDataFrameRow (4 columns)\n\n\n\nRow\nID\nTest1\nTest2\nExam\n\n\n\nString7\nInt64\nInt64\nInt64\n\n\n\n\n3\nSD103\n13\n15\n49\n\n\n\n\n\n\n\n# choose rows and column by indexing\ndf[1:3,1:3] |&gt; Table\n\nTable with 3 columns and 3 rows:\n     ID     Test1  Test2\n   ┌────────────────────\n 1 │ SD101  11     48\n 2 │ SD102  8      43\n 3 │ SD103  13     15\n\n\n\n# column\ndf[:,[:Test1,:Test2]] |&gt; Table |&gt; display\n\nTable with 2 columns and 10 rows:\n      Test1  Test2\n    ┌─────────────\n 1  │ 11     48\n 2  │ 8      43\n 3  │ 13     15\n 4  │ 15     20\n 5  │ 10     40\n 6  │ 11     23\n 7  │ 6      24\n 8  │ 12     47\n 9  │ 10     21\n 10 │ 7      27\n\n\n\n# dot referencing\ndf.Test1 |&gt; println\n\n[11, 8, 13, 15, 10, 11, 6, 12, 10, 7]",
+    "crumbs": [
+      "DataFrames",
+      "wrangle"
+    ]
+  },
+  {
+    "objectID": "dataframe/wrangle.html#using-dataframes",
+    "href": "dataframe/wrangle.html#using-dataframes",
+    "title": "wrangle",
+    "section": "2 Using DataFrames",
+    "text": "2 Using DataFrames",
+    "crumbs": [
+      "DataFrames",
+      "wrangle"
+    ]
+  },
+  {
+    "objectID": "dataframe/wrangle.html#select-rows-with-subset",
+    "href": "dataframe/wrangle.html#select-rows-with-subset",
+    "title": "wrangle",
+    "section": "3 Select Rows with subset",
+    "text": "3 Select Rows with subset\n\n3.1 Subset rows by criteria (DataFrame::ByRow)\n\nsubset(df, :Exam =&gt; x -&gt; x .&lt; 50) |&gt; Table\n\nTable with 4 columns and 3 rows:\n     ID     Test1  Test2  Exam\n   ┌──────────────────────────\n 1 │ SD103  13     15     49\n 2 │ SD107  6      24     46\n 3 │ SD109  10     21     48\n\n\n\nsubset(df, :ID =&gt; ByRow(x -&gt; x ==\"SD110\")) |&gt; Table\n\nTable with 4 columns and 1 row:\n     ID     Test1  Test2  Exam\n   ┌──────────────────────────\n 1 │ SD110  7      27     62\n\n\n\n\n3.2 Subset with @rsubset\n\n@rsubset df :Exam &lt; 50 \n\n3×4 DataFrame\n\n\n\nRow\nID\nTest1\nTest2\nExam\n\n\n\nString7\nInt64\nInt64\nInt64\n\n\n\n\n1\nSD103\n13\n15\n49\n\n\n2\nSD107\n6\n24\n46\n\n\n3\nSD109\n10\n21\n48\n\n\n\n\n\n\n\n@rsubset df :ID==\"SD110\"\n\n1×4 DataFrame\n\n\n\nRow\nID\nTest1\nTest2\nExam\n\n\n\nString7\nInt64\nInt64\nInt64\n\n\n\n\n1\nSD110\n7\n27\n62",
+    "crumbs": [
+      "DataFrames",
+      "wrangle"
+    ]
+  },
+  {
+    "objectID": "dataframe/wrangle.html#choose-rows-with-subset",
+    "href": "dataframe/wrangle.html#choose-rows-with-subset",
+    "title": "wrangle",
+    "section": "3 Choose Rows with subset",
+    "text": "3 Choose Rows with subset\nUse subset instead of filter (subset works on complete columns and missing values). Syntax for subset is subset(df, function)\n\n3.1 Subset rows by criteria (DataFrame::ByRow)\n\n# choose rows with Exam score less than 50\nsubset(df, :Exam =&gt; x -&gt; x .&lt; 50) |&gt; Table\n\nTable with 4 columns and 3 rows:\n     ID     Test1  Test2  Exam\n   ┌──────────────────────────\n 1 │ SD103  13     15     49\n 2 │ SD107  6      24     46\n 3 │ SD109  10     21     48\n\n\n\n# can include the ByRow feature if needed. \nsubset(df, :ID =&gt; ByRow(x -&gt; x ==\"SD109\")) |&gt; Table\n\nTable with 4 columns and 1 row:\n     ID     Test1  Test2  Exam\n   ┌──────────────────────────\n 1 │ SD109  10     21     48\n\n\n\n\n3.2 Subset with @rsubset (using DataFramesMeta.jl)\n\n# might be preferred, simpler syntax\n@rsubset df :Exam &lt; 50 \n\n3×4 DataFrame\n\n\n\nRow\nID\nTest1\nTest2\nExam\n\n\n\nString7\nInt64\nInt64\nInt64\n\n\n\n\n1\nSD103\n13\n15\n49\n\n\n2\nSD107\n6\n24\n46\n\n\n3\nSD109\n10\n21\n48\n\n\n\n\n\n\n\n@rsubset df :ID==\"SD110\"\n\n1×4 DataFrame\n\n\n\nRow\nID\nTest1\nTest2\nExam\n\n\n\nString7\nInt64\nInt64\nInt64\n\n\n\n\n1\nSD110\n7\n27\n62",
+    "crumbs": [
+      "DataFrames",
+      "wrangle"
+    ]
+  },
+  {
+    "objectID": "dataframe/wrangle.html#choose-columns-with-select",
+    "href": "dataframe/wrangle.html#choose-columns-with-select",
+    "title": "wrangle",
+    "section": "4 Choose columns with select",
+    "text": "4 Choose columns with select\n\n4.1 Choose columns by @select\n\n# use select to choose columns\n@select(df, :Test1, :Test2, :Exam) |&gt; Table\n\nTable with 3 columns and 10 rows:\n      Test1  Test2  Exam\n    ┌───────────────────\n 1  │ 11     48     61\n 2  │ 8      43     77\n 3  │ 13     15     49\n 4  │ 15     20     57\n 5  │ 10     40     82\n 6  │ 11     23     65\n 7  │ 6      24     46\n 8  │ 12     47     80\n 9  │ 10     21     48\n 10 │ 7      27     62",
+    "crumbs": [
+      "DataFrames",
+      "wrangle"
+    ]
+  },
+  {
+    "objectID": "plots/layouts.html",
+    "href": "plots/layouts.html",
+    "title": "layouts",
+    "section": "",
+    "text": "0.1 Packages\n\nimport Pkg; \nPkg.add(\"StatsPlots\");\nPkg.add(\"Pipe\")\nusing RDatasets, Distributions\nusing DataFrames, DataFramesMeta, TypedTables\nusing Plots, Statistics\nusing Pipe\n\n\n\n0.2 Data\n\ndata = dataset(\"datasets\",\"iris\")\niris = select(data,:Species,:)\nfirst(iris,5)\n\n5×5 DataFrame\n\n\n\nRow\nSpecies\nSepalLength\nSepalWidth\nPetalLength\nPetalWidth\n\n\n\nCat…\nFloat64\nFloat64\nFloat64\nFloat64\n\n\n\n\n1\nsetosa\n5.1\n3.5\n1.4\n0.2\n\n\n2\nsetosa\n4.9\n3.0\n1.4\n0.2\n\n\n3\nsetosa\n4.7\n3.2\n1.3\n0.2\n\n\n4\nsetosa\n4.6\n3.1\n1.5\n0.2\n\n\n5\nsetosa\n5.0\n3.6\n1.4\n0.2\n\n\n\n\n\n\n\n\n0.3 iris_long\n\niris_long = stack(iris, 2:5) \nfirst(iris_long,5)\n\n5×3 DataFrame\n\n\n\nRow\nSpecies\nvariable\nvalue\n\n\n\nCat…\nString\nFloat64\n\n\n\n\n1\nsetosa\nSepalLength\n5.1\n\n\n2\nsetosa\nSepalLength\n4.9\n\n\n3\nsetosa\nSepalLength\n4.7\n\n\n4\nsetosa\nSepalLength\n4.6\n\n\n5\nsetosa\nSepalLength\n5.0\n\n\n\n\n\n\n\n\n0.4 Subsets\n\n# :Species,:variable,:value\nd1 = @rsubset iris_long :variable==\"SepalLength\"\nd2 = @rsubset iris_long :variable==\"SepalWidth\"\nd3 = @rsubset iris_long :variable==\"PetalLength\"\nd4 = @rsubset iris_long :variable==\"PetalWidth\"\nfirst(d1,5)\n\n5×3 DataFrame\n\n\n\nRow\nSpecies\nvariable\nvalue\n\n\n\nCat…\nString\nFloat64\n\n\n\n\n1\nsetosa\nSepalLength\n5.1\n\n\n2\nsetosa\nSepalLength\n4.9\n\n\n3\nsetosa\nSepalLength\n4.7\n\n\n4\nsetosa\nSepalLength\n4.6\n\n\n5\nsetosa\nSepalLength\n5.0\n\n\n\n\n\n\n\n\n0.5 Boxplots Layout1\n\nusing StatsPlots\n# boxplot(xgrp,y)\np1 = boxplot(d1.Species, d1.value, title=\"SepalLength\", group=d1.Species)\np2 = boxplot(d2.Species, d2.value, title=\"SepalWidth\", group=d2.Species)\np3 = boxplot(d3.Species, d3.value, title=\"PetalLength\", group=d3.Species)\np4 = boxplot(d4.Species, d4.value, title=\"PetalWidth\", group=d4.Species)\nplot(p1,p3,p2,p4, layout=(2,2),legend=false,size=(600,500))\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n0.6 Boxplots Layout2\n\nclabels=[\"Se\",\"Ve\",\"Vi\"]\nplot(p1,p3,p2,p4, layout=(1,4),legend=false,size=(600,500),\n     ylimits=(0,8),xticks=(1:3,clabels))"
+  },
+  {
+    "objectID": "plots/plotsLayouts.html",
+    "href": "plots/plotsLayouts.html",
+    "title": "WebJ",
+    "section": "",
+    "text": "using RDatasets, DataFrames, DataFramesMeta, TypedTables\nusing Plots, Statistics, StatsPlots, Distributions\nusing Pipe\n\n\ndata = dataset(\"datasets\",\"iris\")\niris = select(data,:Species,:)\n\niris_long = stack(iris, 2:5)\nfirst(iris_long,2)\n\n2×3 DataFrame\n\n\n\nRow\nSpecies\nvariable\nvalue\n\n\n\nCat…\nString\nFloat64\n\n\n\n\n1\nsetosa\nSepalLength\n5.1\n\n\n2\nsetosa\nSepalLength\n4.9\n\n\n\n\n\n\n\nd1 = @rsubset iris_long :variable==\"SepalLength\"\nd2 = @rsubset iris_long :variable==\"SepalWidth\"\nd3 = @rsubset iris_long :variable==\"PetalLength\"\nd4 = @rsubset iris_long :variable==\"PetalWidth\"\nfirst(d1,2)\n\n2×3 DataFrame\n\n\n\nRow\nSpecies\nvariable\nvalue\n\n\n\nCat…\nString\nFloat64\n\n\n\n\n1\nsetosa\nSepalLength\n5.1\n\n\n2\nsetosa\nSepalLength\n4.9\n\n\n\n\n\n\n\nboxplot(d1.Species, d1.value, group=d1.Species, ylimits=(4,8))\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nusing StatsPlots\n# plotsize=(300,400)\np1 = boxplot(d1.Species,d1.value, title=\"SepalLength\",group=d1.Species,ylimits=(0,8))\np2 = boxplot(d2.Species,d2.value, title=\"SepalWidth\",group=d2.Species,ylimits=(0,5))\np3 = boxplot(d3.Species,d3.value, title=\"PetalLength\",group=d3.Species,ylimits=(0,8))\np4 = boxplot(d4.Species,d4.value,title=\"SepalWidth\",group=d4.Species,ylimits=(0,5))\nplot(p1,p3,p2,p4, layout=(2,2),legend=false)\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nclabels=[\"Se\",\"Ve\",\"Vi\"]\nplot(p1,p3,p2,p4, layout=(1,4),legend=false,ylimits=(0,8), size=(600,600),xticks=(1:3,clabels))\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nxgrp = rand([\"a\",\"b\",\"c\"],100)\ny = rand(100)\nboxplot(xgrp,y, group=xgrp)"
+  },
+  {
+    "objectID": "plots/curves.html",
+    "href": "plots/curves.html",
+    "title": "curves",
+    "section": "",
+    "text": "using Plots \nusing LaTeXStrings\n\nThese curves are based on direct functions. The x domain is usually defined by a range sequence, and the functions are applied on the range via a dot function.",
+    "crumbs": [
+      "Plots",
+      "curves"
+    ]
+  },
+  {
+    "objectID": "plots/curves.html#d-plots",
+    "href": "plots/curves.html#d-plots",
+    "title": "curves",
+    "section": "1 2D Plots",
+    "text": "1 2D Plots\n\n1.1 Simple function plot\n\n# note1: x is a range type\n# note2: y is passed as a vector to plot\n\nx = range(-2,2,length=50)\ny = x.^3\nplot(x,y, framestyle=:origin, leg=false, \n     size=(300,250),lw=2,linecolor=:black)\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.2 Polynomial functions\n\n# using LaTeXStrings\n# f, g are functions passed to plot\n# hence don't need @.\n\nx = range(-2,2, length=100)\nf(x) = x^2 -5*x +2\ng(x) = x^4+3\n\nplot(x,[f,g],size=(300,300), \n  label=[L\"f=x^2-5x+2\" L\"g=x^4+3\"], lw=2)\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n# f,g are functions passed to plot\n# annotations uses LaTeXStrings\n\nx = range(-2,2, length=100)\nf(x)= x^4 + 2\ng(x)= -2*x^2+10\nplot(x,[f,g], size=(300,300), leg=false,lw=3)\nannotate!(-0.5,17,L\"f(x)=x^4+3\")\nannotate!(0,11,L\"g(x)=-2x^2+10\")\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.3 Trigonometrical functions\n\nx = range(0, 10, length=100)\ny1 = sin.(x)\ny2 = cos.(x)\nplot(x, [y1,y2], label=[\"sin(x)\" \"cos(x)\"], linewidth=2)\nplot!(size=(300,250))\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.4 Exponential (Normal) Plot\n\nx = range(-3.5, 3.5, length=200)\ny3=@. (1/sqrt(2*pi))*exp(-(x^2)/2)\nplot(x, y3, label=L\"mu=0,σ=1\", lw=2)\nplot!(size=(300,250))\n\ny4=@. (1/(0.5*sqrt(2*pi)))*exp(-(x^2)/(2*0.5^2))\nplot!(x,y4,label=L\"mu=0,σ=0.5\",lw=2)",
+    "crumbs": [
+      "Plots",
+      "curves"
+    ]
+  },
+  {
+    "objectID": "plots/parametrics.html",
+    "href": "plots/parametrics.html",
+    "title": "parametrics",
+    "section": "",
+    "text": "using DataFrames, Plots, TypedTables\n\nThese plots are based on parametric functions.\ndirection: right\na: |latex t |\nb: |latex  x=f(t) |\nc: |latex  y=g(t) |\nd: |latex  plot(x,y) |\n\na -&gt; b -&gt; d\na -&gt; c -&gt; d",
+    "crumbs": [
+      "Plots",
+      "parametrics"
+    ]
+  },
+  {
+    "objectID": "plots/parametrics.html#parametrics",
+    "href": "plots/parametrics.html#parametrics",
+    "title": "parametrics",
+    "section": "1 Parametrics",
+    "text": "1 Parametrics\n\n1.1 Polynomials\n\n# parametric parabola\nt = range(-2,1, length=20) |&gt; collect\nx = @. t^2+t\ny = @. 2*t- 1\n\nplot(x,y, color=\"red\", framestyle=:origin, \n       leg=false, size=(300,250), lw=2)\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.2 Trigonometric\n\n# ellipse\nt = range(0,2*pi, length=100)\nx = 5*cos.(t)\ny = 2*sin.(t)\nplot(x,y, framestyle=:origin, leg=false,\n      size=(300,250) , lw=2)\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n# Rose Curve\nt = range(0,2*pi, length=200)\nx = @. cos(t)*sin(4*t)\ny = @. sin(t)*sin(4*t)\nplot(x,y, framestyle=:origin, leg=false,\n       size=(300,250),lw=2)\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n# Lissajous\nt = range(-12,12, length=600)\nx = @. 2*cos(3*t)\ny = @. 2*sin(2*t)\nplot(x,y, leg=false,\n      size=(300,300),lw=2,linecolor=:red)\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n# Hypotrochoid\nt = range(-12,12, length=600)\nx = @. 2*cos(t)+ 5*cos(2*t/3)\ny = @. 2*sin(t)- 5*sin(2*t/3)\nplot(x,y, leg=false,\n      size=(300,300), lw=2)\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n# Hypotrochoid with variables\nR=15\nr=14\nd=1\n\nt = range(0,90, length=800)\nx = @. (R-r)*cos(t)+ d*cos(((R-r)/r)*t)\ny = @. (R-r)*sin(t)- d*sin(((R-r)/r)*t)\nplot(x,y , leg=false,\n      size=(300,300), lw=2, linecolor=:brown)",
+    "crumbs": [
+      "Plots",
+      "parametrics"
+    ]
+  },
+  {
+    "objectID": "plots/3D.html",
+    "href": "plots/3D.html",
+    "title": "3D",
+    "section": "",
+    "text": "import Pkg; Pkg.add(\"PGFPlotsX\")\nusing Plots, DataFrames, RDatasets, PGFPlotsX, LaTeXStrings",
+    "crumbs": [
+      "Plots",
+      "3D"
+    ]
+  },
+  {
+    "objectID": "plots/PGFPlotsX.html",
+    "href": "plots/PGFPlotsX.html",
+    "title": "PGFPlotsX",
+    "section": "",
+    "text": "0.1 Packages\n\nimport Pkg; Pkg.add(\"PGFPlotsX\")\nusing Plots\nusing PGFPlotsX\nusing LaTeXStrings\n\n\n@pgf Axis(\n    {\n        xlabel = L\"x\",\n        ylabel = L\"f(x) = x^2 - x + 4\"\n    },\n    Plot(\n        Expression(\"x^2 - x + 4\")\n    )\n)\n\n\n\n\n\n\n\n\n\nx = range(-1; stop = 1, length = 51) # so that it contains 1/0\n@pgf Axis(\n    {\n        xmajorgrids,\n        ymajorgrids,\n    },\n    Plot(\n        {\n            no_marks,\n        },\n        Coordinates(x, 1 ./ x)\n    )\n)\n\n\n\n\n\n\n\n\n\nx = range(-2; stop = 2, length = 20)\ny = range(-0.5; stop = 3, length = 25)\nf(x, y) = (1 - x)^2 + 100*(y - x^2)^2\n@pgf Plot3(\n    {\n        surf,\n    },\n    Coordinates(x, y, f.(x, y'))\n)\n\n\n\n\n\n\n\n\n\nusing Plots; pgfplotsx()\nsurface(range(-3,3, length=30), range(-3,3, length=30),\n        (x, y) -&gt; exp(-x^2-y^2),\n        label=\"\",\n        colormap_name = \"viridis\",\n        extra_kwargs =:subplot)"
+  },
+  {
+    "objectID": "plots/tikz.html",
+    "href": "plots/tikz.html",
+    "title": "tikz",
+    "section": "",
+    "text": "import Pkg; Pkg.add(\"PGFPlotsX\")\nusing Plots\nusing PGFPlotsX\n\nTikZ can be rendered in Quarto in 2 ways:\n\nunder .tikz code chunk using thetikz Quarto extension,\nunder Julia code chunk using the PGFPlotsX.jl package.\n\nIn this section we will be using method 1 for maximum compatibility. The PGFPlotsX.jl package will be reserved for 2D and 3D plots.\nRemember to install the extension tikz and to put the filters: -tikz in the yaml section."
+  },
+  {
+    "objectID": "plots/pgfplotsx.html",
+    "href": "plots/pgfplotsx.html",
+    "title": "PGFPlotsX",
+    "section": "",
+    "text": "PGFPlotsX.jl is a Julia package and not a Quarto extension. It does require LiveTeX installation to play well with the package. In particular,\n\nit requires pdf2svg: install via brew install pdf2svg at terminal (note that Poppler, Cairo dependencies are also installed).\nit requires luatex to be installed (tlmgr info luatex).\ninstall missing .sty through tlmgr (e.g.tlmgr install colorpage)\nNeed specify pdf-engine: lualatex (for speed) in the project yaml.\nNeed to import Pkg; Pkg.add(\"PGFPlotsX\") in Julia code chunk.\nWhen using Plots, pgfplotsx() may be indicated as the backend graphic engine. Once set you can use Plots syntax.",
+    "crumbs": [
+      "PGFPlotsX",
+      "pgfplotsx"
+    ]
+  },
+  {
+    "objectID": "plots/tikz.html#tikz-extension",
+    "href": "plots/tikz.html#tikz-extension",
+    "title": "tikz",
+    "section": "1 TikZ extension",
+    "text": "1 TikZ extension\n\n1.1 2D Plots in Tikz\n\\tikz{\n% grid\n\\draw (0,0) grid (8,8)\n}\n\n\n\n\n1.2 Drawing\n\\tikz{\n\\draw[gray!80](0,0)grid (6,5);\n\n\\node at (3,4) {$i$};\n\\node at (1,1) {$k$};\n\\node at (5,1) {$j$};\n\n\\draw [-&gt;, very thick] (3.2,3.8) -- (4.8,1.2);\n\\draw [-&gt;, very thick] (4.8,1) -- (1.2,1);\n\\draw [-&gt;, very thick] (1.2,1.2) -- (2.8,3.8);\n}\n\n\n\n\n1.3 Maze\n\\begin{tikzpicture}\n% grid\n\\draw[gray!20](0,0) grid (11,11);\n\n% maze\n\\draw[line width=2pt, cap=round, rounded corners=1pt,draw=black]\n(1,1) -| (10,2)--(8,2)\n(10,2) |- (8,5)--(8,6) -| (9,7)\n(10,4) -- (10,10)\n\n(2,2) -| (1,4) -| (2,6)\n(1,4) |- (3,10) -- (3,9)\n(2,10)-|(8,9)(8,10)-|(9,8)-|(7,9)\n\n(5,1) |- (7,2) -|(3,2) |-(2,3)\n(3,3) |- (4,5)--(4,7)\n(4,6) -|(5,8)-|(3,6)\n\n(2,7) |-(6,9) |-(5,5)|-(4,4)|-(5,3)\n\n(6,3)-|(9,4)--(6,4)(7,4)|-(8,7)\n((7,6)--(6,6);\n\n% start and end points\n\\draw[-latex, line width=3pt, red](0.5,1.5)--(1.5,1.5);\n\\draw[-latex, line width=3pt, red](9.5,9.5)--(9.5,10.5);\n\\end{tikzpicture}"
+  },
+  {
+    "objectID": "plots/tikz.html#tikz-plots",
+    "href": "plots/tikz.html#tikz-plots",
+    "title": "tikz",
+    "section": "2 TikZ Plots",
+    "text": "2 TikZ Plots\n\n2.1 2D Trigonometry\n\n\\tikz{\n  \\draw (-3,-3) grid (3,3);\n  \\draw[domain   = 0:360,\n          samples  = 200,\n          variable = \\t,\n          smooth, blue, thick]\n    plot ({2*cos(\\t)},{2*sin(3*\\t)});\n}\n\n\n\n2.2 2D polynomial\n\n\n\n2.3 3D Surface with axis guide\n\n\n\n2.4 \n\n\n2.5 PGFPlotsX version\n\nx = range(-4; stop = 4, length = 5)\ny = range(-5; stop = 5, length = 5)\nf(x, y) =  -x/6 + y/3\n@pgf Plot3({\n        surf,\n    },\n    Coordinates(x, y, f.(x, y'))\n)\n\n\n\n\n\n\n\n\n\n\n2.6 PGFPlotsx\n\nusing Plots; \npgfplotsx()   # use this for backend\npl  = plot(1:5)\npl2 = plot((1:5).^2)",
+    "crumbs": [
+      "PGFPlotsX",
+      "tikz"
+    ]
+  },
+  {
+    "objectID": "plots/tikz.html#tikz-data-visualizations",
+    "href": "plots/tikz.html#tikz-data-visualizations",
+    "title": "tikz",
+    "section": "2 TikZ Data Visualizations",
+    "text": "2 TikZ Data Visualizations\n\n2.1 Specify Data Points\n\\usetikzlibrary {datavisualization}\n\\begin{tikzpicture}\n  \\datavisualization [school book axes, visualize as smooth line]\n    data {\n      x, y\n      -1.5, 2.25\n      -1, 1\n      -.5, .25\n      0, 0\n      .5, .25\n      1, 1\n      1.5, 2.25\n    };\n\\end{tikzpicture}\n\n\n\n2.2 2D polynomial\n\\begin{tikzpicture}[domain=0:4]\n  \\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);\n\n  \\draw[-&gt;] (-0.2,0) -- (4.2,0) node[right] {$x$};\n  \\draw[-&gt;] (0,-1.2) -- (0,4.2) node[above] {$f(x)$};\n\n  \\draw[color=red,thick] plot (\\x,\\x)             node[right] {$f(x) =x$};\n  % \\x r means to convert '\\x' from degrees to _r_adians:\n  \\draw[color=blue,thick]  plot (\\x,{sin(\\x r)})  node[right] {$f(x) = \\sin x$};\n  \\draw[color=orange,thick] plot (\\x,{0.05*exp(\\x)}) node[right] {$f(x) = \\frac{1}{20} \\mathrm e^x$};\n\\end{tikzpicture}\n\n\n\n2.3 Grid"
+  },
+  {
+    "objectID": "plots/tikz.html#trigonometrical",
+    "href": "plots/tikz.html#trigonometrical",
+    "title": "tikz",
+    "section": "3 Trigonometrical",
+    "text": "3 Trigonometrical\n\n3.1 Sine wave\n\n\n\n3.2 PGFPlotsX version\n\nx = range(-4; stop = 4, length = 5)\ny = range(-5; stop = 5, length = 5)\nf(x, y) =  -x/6 + y/3\n@pgf Plot3({\n        surf,\n    },\n    Coordinates(x, y, f.(x, y'))\n)\n\n\n\n\n\n\n\n\n\n\n3.3 PGFPlotsx\n\nusing Plots; \npgfplotsx()   # use this for backend\npl  = plot(1:5)\npl2 = plot((1:5).^2)"
+  },
+  {
+    "objectID": "plots/3D.html#plot3",
+    "href": "plots/3D.html#plot3",
+    "title": "3D",
+    "section": "1 Plot3",
+    "text": "1 Plot3\n\n1.1 scatter\n\npgfplotsx() # because its nicer\n\ndefault(size=(300,300),\n        xlabel=\"x\",\n        ylabel=\"y\", \n        zlabel=\"z\",\n        framestyle=:box, \n        leg=false,\n        )\nscatter([0],[0],[0], \n        seriestype=:scatter,\n        title=\"default origin\")\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.2 plot\n\npgfplotsx()\n\nx = [-4, 4,4,-4,-4]\ny = [-5,-5,5, 5,-5]\nz = -x/6+y/2\nscatter([0],[0],[0],\n        seriestype=:scatter,\n        xlimits=(-4,4),\n        ylimits=(-5,5),\n        zlimits=(-4,4),\n        title=\"scatter\"\n       )\nplot!(x,y,z, markershape=:circle)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.3 Expression\n\n@pgf Axis(\n    {\n        xlabel = L\"x\",\n        ylabel = L\"y\"\n    },\n    Plot3(\n        Expression(\"-x/6+y/2\")\n    )\n)\n\n\n\n\n\n\n\n\n\n\n1.4 surf\n\nx = range(-4; stop = 4, length = 20)\ny = range(-5; stop = 5, length = 25)\nf(x, y) = -x/6+y/2\n@pgf Plot3(\n    {\n        surf,\n    },\n    Coordinates(x, y, f.(x, y'))\n    )\n\n\n\n\n\n\n\n\n\n\n1.5 backend\n\nusing Plots; \npgfplotsx()\nsurface(range(-3,3, length=30), \n        range(-3,3, length=30),\n        (x, y) -&gt; -x^2-y^2,\n        label=L\"-x^2-y^2\",\n        size=(400,300),\n        colorbar=false)",
+    "crumbs": [
+      "Plots",
+      "3D"
+    ]
+  },
+  {
+    "objectID": "plots/plot3.html",
+    "href": "plots/plot3.html",
+    "title": "3D",
+    "section": "",
+    "text": "import Pkg; Pkg.add(\"PGFPlotsX\")\nusing Plots\nusing PGFPlotsX\nusing LaTeXStrings\n\n\npkgversion(PGFPlotsX)\n\nv\"1.6.2\""
+  },
+  {
+    "objectID": "plots/plot3.html#plot3",
+    "href": "plots/plot3.html#plot3",
+    "title": "3D",
+    "section": "1 Plot3",
+    "text": "1 Plot3\n\n1.1 Coordinates\n\n@pgf Axis(\n    {\n      xlabel=L\"x\",\n      ylabel=L\"y\",\n      zlabel=L\"f(x,y)\"\n    },\n    Plot3(\n        {\n            mark=\"*\",\n        },\n        Coordinates(\n          [(0,0,0)]\n        )\n    )\n)\n\n\n\n\n\n\n\n\n\n\n1.2 Table\n\nx = [-4,    4,   4,   -4 ,-4]\ny = [-5,   -5,   5,    5 ,-5]\nz = -x/6 .+ y/2\n@pgf Plot3(\n    {\n        mark=\"*\",\n    },\n    Table(x, y, z)\n    )\n\n\n\n\n\n\n\n\n\n\n1.3 Expression\n\n@pgf Axis(\n    {\n        xlabel = L\"x\",\n        ylabel = L\"y\"\n    },\n    Plot3(\n        Expression(\"-x/6+y/2\")\n    )\n)\n\n\n\n\n\n\n\n\n\n\n1.4 surf\n\nx = range(-4; stop = 4, length = 20)\ny = range(-5; stop = 5, length = 25)\nf(x, y) = -x/6+y/2\n@pgf Plot3(\n    {\n        surf,\n    },\n    Coordinates(x, y, f.(x, y'))\n    )\n\n\n\n\n\n\n\n\n\n\n1.5 backend\n\nusing Plots; \npgfplotsx()\nsurface(range(-3,3, length=30), \n        range(-3,3, length=30),\n        (x, y) -&gt; x^2-y^2,\n        label=L\"x^2-y^2\",\n        colormap_name = \"viridis\")"
+  },
+  {
+    "objectID": "plots/pgfplotsx.html#pgfplotsx",
+    "href": "plots/pgfplotsx.html#pgfplotsx",
+    "title": "PGFPlotsX",
+    "section": "1 PGFPlotsX",
+    "text": "1 PGFPlotsX\n\n1.1 Coordinates\n\n# Coordinates of points\n\n@pgf Axis(\n    {\n        title=\"Use of Coordinates\",\n        xlabel=L\"x\",\n        ylabel=L\"y\",\n    },\n    Plot(\n        {\n          mark=\"*\",\n        },\n        Coordinates(\n          [(1,1),(1.2,2),(1.5,2.5),(2,3)]\n        )\n    )\n)\n\n\n\n\n\n\n\n\n\n\n1.2 Table\n\n# Table of vectors\n\nx = [2,3,3.5,4,4.5,5]\ny = [3.5,5,4,6,4.5,5.5]\n@pgf Axis(\n     {\n       title: \"Use of Table\",\n       xlabel=L\"x\",\n       ylabel=L\"y\",\n       xmajorgrids,\n       ymajorgrids,\n     },\n     Plot(\n     {\n       mark=\"*\",\n      },\n      Table(x,y)\n     )\n)\n\n\n\n\n\n\n\n\n\n\n1.3 Expression\n\n# Expression for equations\n\nx = range(-5,5)\n@pgf Axis(\n     {\n       title: \"Use of Expression\",\n       xlabel=L\"x\",\n       ylabel=L\"y\",\n     },\n     Plot(\n     {\n       no_marks,\n      },\n      Expression(\"x^3+2\")\n     )\n)\n\n\n\n\n\n\n\n\n\n\n1.4 Dot operator\n\n# Use of dot operator in function\n\nx = range(-1,1,length=51)\nf(x)=1/x\n@pgf Axis(\n    {\n        xmajorgrids,\n        ymajorgrids,\n    },\n    Plot(\n        {\n            no_marks,\n        },\n        Coordinates(x, 1 ./ x)\n    )\n)",
+    "crumbs": [
+      "PGFPlotsX",
+      "pgfplotsx"
+    ]
+  },
+  {
+    "objectID": "plots/backend.html",
+    "href": "plots/backend.html",
+    "title": "pgf backend",
+    "section": "",
+    "text": "import Pkg; Pkg.add(\"PGFPlotsX\")\nusing Plots, PGFPlotsX, LaTeXStrings",
+    "crumbs": [
+      "PGFPlotsX",
+      "backend"
+    ]
+  },
+  {
+    "objectID": "plots/backend.html#pgfplotsx-backend",
+    "href": "plots/backend.html#pgfplotsx-backend",
+    "title": "pgf backend",
+    "section": "1 pgfplotsx backend",
+    "text": "1 pgfplotsx backend\nUses Plots syntax with pgfplotsx backend engine.\n\n1.1 Polynomial function\n\n# normal plot(x,y)\n\npgfplotsx()\nx1 = range(-2,2,length=50)\ny1 = x1.^3\nplot(x1,y1, framestyle=:origin, leg=false, \n     size=(300,250),lw=2,linecolor=:black)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.2 Recipe: scatter\n\n# recipe scatter(x,y)\n\nx2 = [2,3,3.5,4,4.5,5]\ny2 = [3.5,5,4,6,4.5,5.5]\nscatter(x2,y2, leg=false, size=(400,300), framestyle=:origin)\nscatter!([0,4],[0,5], color=\"red\",markersize=5)\nscatter!([4],[3],color=\"yellow\", ms=6)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.3 Recipe: surface\n\ndefault(size=(400,300),\n        fc=:heat,\n        xlabel=\"x\",\n        ylabel=\"y\",\n        zlabel=\"z\",\n        )\nsurface(-4:1:4,\n        -5:1:5,\n         (x,y)-&gt; -x/6+y/2,\n         )\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.4 Recipe: surface\n\nsurface(range(-3,3, length=30), \n        range(-3,3, length=30),\n        (x, y) -&gt; x^2-y^2,\n        label=L\"x^2-y^2\",\n        colormap_name = \"viridis\",\n        size=(400,300),\n        colorbar=false)",
+    "crumbs": [
+      "PGFPlotsX",
+      "backend"
+    ]
+  },
+  {
+    "objectID": "plots/pgfplotsx.html#d",
+    "href": "plots/pgfplotsx.html#d",
+    "title": "PGFPlotsX",
+    "section": "1 2D",
+    "text": "1 2D\n\n1.1 Coordinates\n\n# Coordinates of points\n\n@pgf Axis(\n    {\n        title=\"Use of Coordinates\",\n        xlabel=L\"x\",\n        ylabel=L\"y\",\n    },\n    Plot(\n        {\n          mark=\"*\",\n        },\n        Coordinates(\n          [(1,1),(1.2,2),(1.5,2.5),(2,3)]\n        )\n    )\n)\n\n\n\n\n\n\n\n\n\n\n1.2 Table\n\n# Table of vectors\n\nx = [2,3,3.5,4,4.5,5]\ny = [3.5,5,4,6,4.5,5.5]\n@pgf Axis(\n     {\n       title: \"Use of Table\",\n       xlabel=L\"x\",\n       ylabel=L\"y\",\n       xmajorgrids,\n       ymajorgrids,\n     },\n     Plot(\n     {\n       mark=\"*\",\n      },\n      Table(x,y)\n     )\n)\n\n\n\n\n\n\n\n\n\n\n1.3 Expression\n\n# Expression for equations\n\nx = range(-5,5)\n@pgf Axis(\n     {\n       title: \"Use of Expression\",\n       xlabel=L\"x\",\n       ylabel=L\"y\",\n     },\n     Plot(\n     {\n       no_marks,\n      },\n      Expression(\"x^3+2\")\n     )\n)\n\n\n\n\n\n\n\n\n\n\n1.4 Dot operator\n\n# Use of dot operator in function\n\nx = range(-1,1,length=51)\nf(x)=1/x\n@pgf Axis(\n    {\n        xmajorgrids,\n        ymajorgrids,\n    },\n    Plot(\n        {\n            no_marks,\n        },\n        Coordinates(x, 1 ./ x)\n    )\n)",
+    "crumbs": [
+      "PGFPlotsX",
+      "pgfplotsx"
+    ]
+  },
+  {
+    "objectID": "plots/pgfplotsx.html#d-1",
+    "href": "plots/pgfplotsx.html#d-1",
+    "title": "PGFPlotsX",
+    "section": "2 3D",
+    "text": "2 3D\n\n2.1 Coordinates\n\n@pgf Axis(\n    {\n      xlabel=L\"x\",\n      ylabel=L\"y\",\n      zlabel=L\"f(x,y)\"\n    },\n    Plot3(\n        {\n            mark=\"*\",\n        },\n        Coordinates(\n          [(0,0,0)]\n        )\n    )\n)\n\n\n\n\n\n\n\n\n\n\n2.2 Table\n\nx = [-4,    4,   4,   -4 ,-4]\ny = [-5,   -5,   5,    5 ,-5]\nz = -x/6 .+ y/2\n@pgf Plot3(\n    {\n        mark=\"*\",\n    },\n    Table(x, y, z)\n    )\n\n\n\n\n\n\n\n\n\n\n2.3 Expression\n\n@pgf Axis(\n    {\n        xlabel = L\"x\",\n        ylabel = L\"y\"\n    },\n    Plot3(\n        Expression(\"-x/6+y/2\")\n    )\n)\n\n\n\n\n\n\n\n\n\n\n2.4 surf\n\nx = range(-4; stop = 4, length = 20)\ny = range(-5; stop = 5, length = 25)\nf(x, y) = -x/6+y/2\n@pgf Plot3(\n    {\n        surf,\n    },\n    Coordinates(x, y, f.(x, y'))\n    )",
+    "crumbs": [
+      "PGFPlotsX",
+      "pgfplotsx"
+    ]
+  },
+  {
+    "objectID": "plots/coordsPlots.html",
+    "href": "plots/coordsPlots.html",
+    "title": "coordsPlots",
+    "section": "",
+    "text": "import Pkg; Pkg.add(\"Plots\"); Pkg.add(\"DataFrames\")\nusing Plots, DataFrames",
+    "crumbs": [
+      "Plots",
+      "coordsPlots"
+    ]
+  },
+  {
+    "objectID": "plots/coordsPlots.html#plots.jl",
+    "href": "plots/coordsPlots.html#plots.jl",
+    "title": "coordsPlots",
+    "section": "1 Plots.jl",
+    "text": "1 Plots.jl\nPlots(x,y) accepts \n1. two vectors (x,y) \n2. dataframe columns (df$x,df$y) or \n3. matrix columns\n\nThe values (x1,y1) represents the coordinates.\n\n1.1 plot: vectors\n\n# default plot is line plot\nbegin\n    xvec = [40,45,47,51,53]\n    yvec = [15,18,34,18,28]\n    plot(xvec,yvec,\n         title=\"default: Line Plot\",\n         legend=false, \n         marker=:circle,\n         size = (300,300))\nend\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.2 scatter: df columns\n\nscatter(df.girth, df.height, \n        title =\"Scatter Plot\",\n        xlabel=\"Girth\",\n        ylabel=\"Height\",\n        group = df.name,\n        markersize=6,\n        size=(300,300))\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.3 default 3d\n\n# default axes is set for subsequent 3d plots\n# can change locally\n\ndefault(xlabel=\"x\",\n        ylabel=\"y\",\n        zlabel=\"z\",\n          legend=false,\n            framestyle=:box,\n            size=(300,300))\n\n\n\n1.4 scatter3d: matrix columns\n\nscatter(M[:,1],M[:,2],M[:,3],\n      title=\"Scatter3d\",)\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.5 plot3d: passing coordinates\n\nd = [0 0 0; 1 0 0; 1 1 0; 0 1 0]\nt = [0 0 1; 1 0 1; 1 1 1; 0 1 1]\nplot3d(d[:,1],d[:,2],d[:,3], \n         marker=:circle,\n         color=:red,)\nplot3d!(t[:,1],t[:,2],t[:,3], \n         color=:blue,\n       marker=:diamond)\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.6 scatter 3d: coords tuple to matrix of vectors\n\n# coords to vectors\nbegin\ncoords = [(0,0,0),(1,0,0),(1,1,0),(0,1,0)]\nV = collect(coords)\ndisplay(V)\nvvec1 = getindex.(V,1)\nvvec2 = getindex.(V,2)\nvvec3 = getindex.(V,3)\n\nmm =[vvec1 vvec2 vvec3]\ndisplay(mm)\nscatter(mm[:,1],mm[:,2],mm[:,3],\n        framestyle=:origin, color=:red)\nend\n\n4-element Vector{Tuple{Int64, Int64, Int64}}:\n (0, 0, 0)\n (1, 0, 0)\n (1, 1, 0)\n (0, 1, 0)\n\n\n4×3 Matrix{Int64}:\n 0  0  0\n 1  0  0\n 1  1  0\n 0  1  0\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.7 scatter: Scattered plane\n\n  a = -4:2:4\n    b = -5:2.5:5\n    f(x,y) = -x/6+y/2\n    ab = Iterators.product(a,b)\n  t = collect(Tuple(ab))    \n    xvec = getindex.(t,1)\n    yvec = getindex.(t,2)\n    scatter(xvec,yvec,f(xvec,yvec))\n    plot!(a,b,f, \n            xlimits=(-4,4),\n        ylimits=(-5,5),\n        zlimits=(-4,4),\n            color=:blue)",
+    "crumbs": [
+      "Plots",
+      "coordsPlots"
+    ]
+  },
+  {
+    "objectID": "plots/statsplots.html",
+    "href": "plots/statsplots.html",
+    "title": "statsPlots",
+    "section": "",
+    "text": "import Pkg; Pkg.add(\"StatsPlots\")\nPkg.add(\"Statistics\")"
+  },
+  {
+    "objectID": "plots/statsplots.html#statsplots",
+    "href": "plots/statsplots.html#statsplots",
+    "title": "statsPlots",
+    "section": "1 StatsPlots",
+    "text": "1 StatsPlots\n\n1.1 Scatter Points\n\nusing StatsPlots\n\n@df iris scatter(:SepalLength,:PetalLength, group=:Species,\n                xlabel=\"SepalLength\", ylabel=\"PetalLength\")\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.2 Bar Plot\n\nusing Statistics\n    \nirisGp = groupby(iris, :Species)\nspeciesAvg = combine(irisGp, :PetalLength =&gt; mean)\nspeciesAvg\n\n3×2 DataFrame\n\n\n\nRow\nSpecies\nPetalLength_mean\n\n\n\nCat…\nFloat64\n\n\n\n\n1\nsetosa\n1.462\n\n\n2\nversicolor\n4.26\n\n\n3\nvirginica\n5.552\n\n\n\n\n\n\n\nplot(bar(speciesAvg.Species, speciesAvg.PetalLength_mean,\n        title=\"Avg PetalLength by Species\",\n        ylabel=\"PetalLength (inches)\",\n        color=[:lightblue,:lightgreen,:orange],\n        legend=false,\n        size=(400,300)))\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.3 Histograms\n\nusing Distributions, DataFramesMeta\n    \ndefault(legend=false,\n        size=(500,400))\n    \niris1 = @rsubset(iris, :Species==\"setosa\")\niris2 = @rsubset(iris, :Species==\"versicolor\")\niris3 = @rsubset(iris, :Species==\"virginica\")\n    \np1 = @df iris1 histogram(:SepalLength, color=:lightblue, title=\"setosa\", bins=6)\np2 = @df iris2 histogram(:SepalLength, color=:lightgreen, title=\"versicolor\", bins=8)\np3 = @df iris3 histogram(:SepalLength, color=:orange, title=\"virginica\", bins=8)    \n\nplot(p1,p2,p3, layout=(2,2), xlim=[3,9], ylim=[0,20])\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.4 BoxPlots\n\nb1 = @df iris boxplot(:Species,:SepalLength,group=:Species, title=\"SepalLength\")\nb2 = @df iris boxplot(:Species,:PetalLength,group=:Species, title=\"PetalLength\")\nplot(b1,b2, layout=(1,2), legend=false, size=(500,400), ylim=[0,8])"
+  },
+  {
+    "objectID": "plots/statsPlots.html",
+    "href": "plots/statsPlots.html",
+    "title": "statsPlots",
+    "section": "",
+    "text": "import Pkg; Pkg.add(\"StatsPlots\")\nPkg.add(\"Statistics\")",
+    "crumbs": [
+      "Plots",
+      "statsPlots"
+    ]
+  },
+  {
+    "objectID": "plots/statsPlots.html#statsplots",
+    "href": "plots/statsPlots.html#statsplots",
+    "title": "statsPlots",
+    "section": "1 StatsPlots",
+    "text": "1 StatsPlots\n\n1.1 Scatter Points\n\nusing StatsPlots\ndefault(size=(300,300))\n\n@df iris scatter(:SepalLength,:PetalLength, group=:Species,\n                xlabel=\"SepalLength\", ylabel=\"PetalLength\")\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.2 Bar Plot\n\nusing Statistics\n    \nirisGp = groupby(iris, :Species)\nspeciesAvg = combine(irisGp, :PetalLength =&gt; mean)\nspeciesAvg\n\n3×2 DataFrame\n\n\n\nRow\nSpecies\nPetalLength_mean\n\n\n\nCat…\nFloat64\n\n\n\n\n1\nsetosa\n1.462\n\n\n2\nversicolor\n4.26\n\n\n3\nvirginica\n5.552\n\n\n\n\n\n\n\nplot(bar(speciesAvg.Species, speciesAvg.PetalLength_mean,\n        title=\"Avg PetalLength by Species\",\n        ylabel=\"PetalLength (inches)\",\n        color=[:lightblue,:lightgreen,:orange],\n        legend=false,\n        size=(300,300)))\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.3 Histograms\n\nusing Distributions, DataFramesMeta\n    \ndefault(legend=false,\n        size=(400,400))\n    \niris1 = @rsubset(iris, :Species==\"setosa\")\niris2 = @rsubset(iris, :Species==\"versicolor\")\niris3 = @rsubset(iris, :Species==\"virginica\")\n    \np1 = @df iris1 histogram(:SepalLength, color=:lightblue, title=\"setosa\", bins=6)\np2 = @df iris2 histogram(:SepalLength, color=:lightgreen, title=\"versicolor\", bins=8)\np3 = @df iris3 histogram(:SepalLength, color=:orange, title=\"virginica\", bins=8)    \n\nplot(p1,p2,p3, layout=(2,2), xlim=[3,9], ylim=[0,20])\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.4 BoxPlots\n\nb1 = @df iris boxplot(:Species,:SepalLength,group=:Species, title=\"SepalLength\")\nb2 = @df iris boxplot(:Species,:PetalLength,group=:Species, title=\"PetalLength\")\nplot(b1,b2, layout=(1,2), legend=false, size=(400,300), ylim=[0,8])",
+    "crumbs": [
+      "Plots",
+      "statsPlots"
+    ]
+  },
+  {
+    "objectID": "plots/GLMakie3D.html",
+    "href": "plots/GLMakie3D.html",
+    "title": "GLMakie3D",
+    "section": "",
+    "text": "0.1 Packages\n\nimport Pkg; Pkg.add(\"GLMakie\")\nusing GLMakie\n\n\n\n0.2 Makie3D Points\n\nfig1 = Figure(size=(300,300))\nax1 = Axis3(fig1[1,1],\n        xlabel=\"x\",\n        ylabel=\"y\",\n        zlabel=\"z\",)\nscatter!(ax1,[Point(0,0)], markersize=15)\nfig1"
+  },
+  {
+    "objectID": "plots/coords2D.html",
+    "href": "plots/coords2D.html",
+    "title": "coords2D",
+    "section": "",
+    "text": "import Pkg; Pkg.add(\"Plots\"); Pkg.add(\"DataFrames\")\nusing Plots, DataFrames, RDatasets",
+    "crumbs": [
+      "Plots",
+      "coords2D"
+    ]
+  },
+  {
+    "objectID": "plots/coords2D.html#plots.jl",
+    "href": "plots/coords2D.html#plots.jl",
+    "title": "coords2D",
+    "section": "1 Plots.jl",
+    "text": "1 Plots.jl\nPlots(x,y) accepts \n1. two vectors (x,y) \n2. dataframe columns (df.x,df.y) or \n3. matrix columns M[:,1],M[:,2]\n\nThe values (x1,y1) represents the coordinates.\n\n1.1 Accepting 2 vectors\n\n# default plot is line plot\nbegin\n  x = [1980,1990,2000,2010,2020]\n    y1 = [40,45,47,51,53]\n    y2 = [15,18,34,18,28]\n    \n    plot(x, [y1,y2],\n         title=\"2 Line Plots\",\n         legend=false, \n         marker=:circle,\n         size = (300,300))\nend\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.2 Accepting 2 dataframe.columns\n\niris = dataset(\"datasets\",\"iris\")\nnames(iris)\n\nscatter(iris.SepalLength, iris.SepalWidth,\n       group=iris.Species,\n       xlabel=\"SepalLength\",\n       ylabel=\"SepalWidth\",\n       size=(400,300))\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.3 Accepting 2 Matrix columns\n\n# note: there's `xlimits, xlim and xticks`\n\nM = [1 1; 1 2; 2 1; 2 2; 1.5 3]\n\nscatter(M[:,1],M[:,2],\n       framestyle=:origin,\n       legend=false,\n       xlabel=\"x\",\n         ylabel=\"y\",\n       xlimits=(0,4),\n         ylimits=(0,4),\n       size=(300,300))",
+    "crumbs": [
+      "Plots",
+      "coords2D"
+    ]
+  },
+  {
+    "objectID": "plots/coord3D.html",
+    "href": "plots/coord3D.html",
+    "title": "coords3D",
+    "section": "",
+    "text": "0.1 Packages\n\nimport Pkg; Pkg.add(\"Plots\")\nusing Plots\n\n\n\n0.2 default 3d\n\n# default axes is set for subsequent 3d plots\n# can change locally\n\ndefault(size=(300,300),\n        xlabel=\"x\",\n        ylabel=\"y\", \n        zlabel=\"f(x,y)\",\n        framestyle=:box, \n        leg=false,\n        xlimits=(-4,4),\n        ylimits=(-5,5),\n        )\n\n\n\n0.3 scatter3d: matrix columns\n{scatter([0],[0],[0], seriestype=:scatter,)}\n\n\n0.4 plot3d: passing coordinates\n\nd = [0 0 0; 1 0 0; 1 1 0; 0 1 0]\nt = [0 0 1; 1 0 1; 1 1 1; 0 1 1]\nplot3d(d[:,1],d[:,2],d[:,3], \n         marker=:circle,\n         color=:red,)\nplot3d!(t[:,1],t[:,2],t[:,3], \n         color=:blue,\n       marker=:diamond)\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n0.5 scatter 3d: coords tuple to matrix of vectors\n\n# coords to vectors\nbegin\ncoords = [(0,0,0),(1,0,0),(1,1,0),(0,1,0)]\nV = collect(coords)\ndisplay(V)\nvvec1 = getindex.(V,1)\nvvec2 = getindex.(V,2)\nvvec3 = getindex.(V,3)\n\nmm =[vvec1 vvec2 vvec3]\ndisplay(mm)\nscatter(mm[:,1],mm[:,2],mm[:,3],\n        framestyle=:origin, color=:red)\nend\n\n4-element Vector{Tuple{Int64, Int64, Int64}}:\n (0, 0, 0)\n (1, 0, 0)\n (1, 1, 0)\n (0, 1, 0)\n\n\n4×3 Matrix{Int64}:\n 0  0  0\n 1  0  0\n 1  1  0\n 0  1  0\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n0.6 scatter: Scattered plane\n\n  a = -4:2:4\n    b = -5:2.5:5\n    f(x,y) = -x/6+y/2\n    ab = Iterators.product(a,b)\n  t = collect(Tuple(ab))    \n    xvec = getindex.(t,1)\n    yvec = getindex.(t,2)\n#   scatter(xvec,yvec,f(xvec,yvec))\n#   plot!(a,b,f, \n            xlimits=(-4,4),\n        ylimits=(-5,5),\n        zlimits=(-4,4),\n            color=:blue)"
+  },
+  {
+    "objectID": "plots/coords3D.html",
+    "href": "plots/coords3D.html",
+    "title": "coords3D",
+    "section": "",
+    "text": "import Pkg; Pkg.add(\"Plots\")\nusing Plots, DataFrames, RDatasets",
+    "crumbs": [
+      "Plots",
+      "coords3D"
+    ]
+  },
+  {
+    "objectID": "plots/coords3D.html#gr-default-backend",
+    "href": "plots/coords3D.html#gr-default-backend",
+    "title": "coords3D",
+    "section": "1 gr() default backend",
+    "text": "1 gr() default backend\n\n1.1 default 3d for axes\n\n# default axes is set for subsequent 3d plots\n# can change locally\n# note: `xlimits, xlim and xticks`\n\ndefault(size=(300,300),\n        xlabel=\"x\",\n        ylabel=\"y\", \n        zlabel=\"f(x,y)\",\n        framestyle=:box, \n        leg=false,\n        xlimits=(-4,4),\n        ylimits=(-5,5),\n        )\nscatter([0],[0],[0], seriestype=:scatter,)\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.2 Matrix data\n\n# passing matrix columns\n    M = [4.0 4.62 1.5 \"Elm\";\n         4.5 4.82 1.8 \"Oak\";\n         4.7 5.32 3.4 \"Elm\";\n         5.1 5.42 1.8 \"Oak\";\n         5.3 5.22 2.8 \"Oak\";\n         5.5 5.20 4.0 \"Oak\";\n         6.0 5.84 5.0 \"Elm\";\n         6.3 5.78 5.5 \"Oak\";]\ntypeof(M)\n\n\nMatrix{Any} (alias for Array{Any, 2})\n\n\n\n\n\n1.3 Accepting Matrix columns as vector inputs\n\nscatter(M[:,1],M[:,2],M[:,3],\n          xlimits=(2,6),\n          ylimits=(4,6),\n          zlimits=(0,6),\n          group=M[:,4],\n          leg=true,\n          title=\"Scatter: matrix columns\",)\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.4 Convert coords Tuple to matrix of vectors\n\n# coordinates as vector of tuples\n    coords = [(0,0,0),(1,0,0),(1,1,0),(0,1,0)]\n    \n    vvec1 = getindex.(coords,1)\n    vvec2 = getindex.(coords,2)\n    vvec3 = getindex.(coords,3)\n    mm =[vvec1 vvec2 vvec3]\n        \n    scatter(mm[:,1],mm[:,2],mm[:,3],\n          xlimits=(0,1),\n          ylimits=(0,1),\n          zlimits=(0,1),\n          color=:red)\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.5 scatter vs. plot\n\n# scatter in red\n\nrd = [0 0 0; 1 0 0; 1 1 0; 0 1 0]\nbb = [0 0 1; 1 0 1; 1 1 1; 0 1 1]\nscatter(rd[:,1],rd[:,2],rd[:,3],\n          xlimits=(0,2),\n            ylimits=(0,2),\n            zlimits=(0,2),\n            marker=:circle,\n            color=:red,)\nplot!(bb[:,1],bb[:,2],bb[:,3], \n         color=:blue,\n       marker=:diamond)\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.6 Plot Points with calculated z\n\n# gr()\n\n  scatter([0],[0],[0], seriestype=:scatter,)\n\n    x = [-4, 4,4,-4,-4]\n    y = [-5,-5,5, 5,-5]\n    z = -x/6+y/2\n    plot!(x,y,z, \n          xlimits=(-4,4),\n            ylimits=(-5,5),\n            color=:blue,\n          markershape=:circle)\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.7 Coords: Scattered plane\n\n# scatter the coordinates\n\n  xs = -4:0.5:4\n    ys = -5:0.5:5\n  v1 = collect(xs)\n    v2 = collect(ys)\n  f(x,y) = -x/6 + y/2\n    MM = collect(Iterators.product(v1, v2)) # 9x11 matrix \n  v1 = getindex.(MM,1)\n    v2 = getindex.(MM,2)\n    w = f.(v1,v2)\n    scatter(v1,v2,w,\n           color=:lightblue,\n           marker=:circle,\n           markersize=2,)",
+    "crumbs": [
+      "Plots",
+      "coords3D"
+    ]
+  },
+  {
+    "objectID": "plots/3D.html#d-plots---examples",
+    "href": "plots/3D.html#d-plots---examples",
+    "title": "3D",
+    "section": "1 3D Plots - Examples",
+    "text": "1 3D Plots - Examples\n\n1.1 default 3d\n\ndefault(size=(300,300),\n        xlabel=L\"x\",\n        ylabel=L\"y\", \n        zlabel=L\"z\",\n        framestyle=:box, \n        leg=false,\n        )\n\n\n\n1.2 3D Figure\n\n  gr()\n  \n  x=range(-4,4,length=20)\n    y=range(-5,5,length=20)\n    z = x/4+y/5\n    scatter([0],[0],[0], color=:blue,)\n    plot!(x,y,z,color=:blue, lw=2)\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.3 3D wireframe plane\n\n  gr()\n  \n  x1=range(-4,4,length=11)\n    y1=range(-5,5,length=11)\n    f(x1,y1) = -x1/6+y1/2\n    \n    # either the function is supplied directly, or\n    # it is applied to the ranges, with the following\n    # transposed x, and output suppressed with ;\n    \n    z1 = f.(x1',y1);\n    \n    wireframe!(x1,y1,z1,)\n    scatter!([0],[0],[0],marker=:circle)\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.4 surf\n\n  pgfplotsx()\n  \n  # z1 from above...\n  \n  wireframe!(x1,y1,z1)\n    surface!(x1,y1,z1,fc=:heat,alpha=0.3)\n    scatter!([0],[0],[0],marker=:circle)\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1.5 backend\n\npgfplotsx()\n\n# directly applied (not range)\n# else got to use collect etc..\n\nsurface(-4:0.5:4, -5:0.5:5,\n           (x,y)-&gt; -x^2+y^2,\n           fc=:heat, alpha=0.3\n             )\nscatter!([0],[0],[0],)",
+    "crumbs": [
+      "Plots",
+      "3D"
+    ]
+  }
+]
